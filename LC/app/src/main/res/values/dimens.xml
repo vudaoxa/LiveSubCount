@@ -2,4 +2,55 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="actionBarSize">48dp</dimen>
+
+    <dimen name="dimen2">2dp</dimen>
+    <dimen name="dimen3">3dp</dimen>
+    <dimen name="dimen4">4dp</dimen>
+    <dimen name="dimen5">5dp</dimen>
+    <dimen name="dimen6">6dp</dimen>
+    <dimen name="dimen7">7dp</dimen>
+    <dimen name="dimen8">8dp</dimen>
+    <dimen name="dimen10">10dp</dimen>
+    <dimen name="dimen12">12dp</dimen>
+    <dimen name="dimen14">14dp</dimen>
+    <dimen name="dimen15">15dp</dimen>
+    <dimen name="dimen16">16dp</dimen>
+    <dimen name="dimen20">20dp</dimen>
+    <dimen name="dimen24">24dp</dimen>
+    <dimen name="dimen32">32dp</dimen>
+    <dimen name="dimen36">36dp</dimen>
+    <dimen name="dimen40">40dp</dimen>
+    <dimen name="dimen46">46dp</dimen>
+    <dimen name="dimen48">48dp</dimen>
+    <dimen name="dimen52">52dp</dimen>
+    <dimen name="dimen56">56dp</dimen>
+    <dimen name="dimen60">60dp</dimen>
+    <dimen name="dimen66">66dp</dimen>
+    <dimen name="dimen70">70dp</dimen>
+    <dimen name="dimen80">80dp</dimen>
+    <dimen name="dimen90">90dp</dimen>
+    <dimen name="dimen96">96dp</dimen>
+    <dimen name="dimen100">100dp</dimen>
+    <dimen name="dimen124">124dp</dimen>
+
+    <dimen name="txt_size_10">10sp</dimen>
+    <dimen name="txt_size_11">11sp</dimen>
+    <dimen name="txt_size_12">12sp</dimen>
+    <dimen name="txt_size_13">13sp</dimen>
+    <dimen name="txt_size_14">14sp</dimen>
+    <dimen name="txt_size_15">15sp</dimen>
+    <dimen name="txt_size_16">16sp</dimen>
+    <dimen name="txt_size_17">17sp</dimen>
+    <dimen name="txt_size_18">18sp</dimen>
+    <dimen name="txt_size_19">19sp</dimen>
+    <dimen name="txt_size_20">20sp</dimen>
+    <dimen name="txt_size_22">22sp</dimen>
+    <dimen name="txt_size_24">24sp</dimen>
+    <dimen name="txt_size_32">32sp</dimen>
+    <dimen name="cardElevation_feed">5dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="padding_recyclerView">0dp</dimen>
+    <dimen name="padding_recyclerView_feed">2dp</dimen>
 </resources>

@@ -6,6 +6,7 @@ package net.lc.utils
 
 object NetConstants {
     val RESPONSE_NULL = "null"
-    var BASE_URL = "https://www.googleapis.com/youtube/v3/channels"
-    val API_LOGIN = "event"
+    const val BASE_URL = "https://content.googleapis.com/"
+    const val API_YOUTUBE_CHANNEL ="youtube/v3/channels"
+
 }

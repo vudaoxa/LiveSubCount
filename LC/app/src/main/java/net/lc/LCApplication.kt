@@ -3,8 +3,9 @@ package net.lc
 import android.app.Application
 
 /**
- * Created by MRVU on 11/25/2016.
+ * Created by HP on 11/25/2016.
  */
-class LCApplication : Application{
+
+class LCApplication : Application(){
 
 }

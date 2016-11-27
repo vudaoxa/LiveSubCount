@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/wrapper_ntb_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.gigamole.navigationtabstrip.NavigationTabStrip
+            android:id="@+id/nts_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            app:nts_active_color="#fff"
+            app:nts_color="#ff1748"
+            app:nts_factor="2.8"
+            app:nts_corners_radius="1.5dp"
+            app:nts_inactive_color="#81ffffff"
+            app:nts_titles="@array/titles"
+            app:nts_size="8dp"
+            app:nts_typeface="fonts/moon.otf"
+            app:nts_weight="3dp"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_search_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/nts_bottom"
+            android:layout_marginTop="5dp"
+
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/mask"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom" />
+
+    <include
+        layout="@layout/layout_show_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/custom_progressbar"
+        android:visibility="gone"/>
+</FrameLayout>
+

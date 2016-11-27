@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_input_text"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginRight="@dimen/dimen10"
+    android:layout_toLeftOf="@+id/layout_btns"
+    android:layout_toRightOf="@+id/toolbar_title"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:visibility="visible">
+
+    <EditText
+        android:id="@+id/edt_search"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:drawableLeft="@mipmap/ic_search_white"
+        android:hint="@string/search_topic"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:singleLine="true"
+        android:text=""
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/img_clear"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:src="@mipmap/ic_close_white"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:id="@+id/img_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="8dp"
+        android:src="@mipmap/ic_filter_search_white"
+        android:visibility="gone" />
+</LinearLayout>

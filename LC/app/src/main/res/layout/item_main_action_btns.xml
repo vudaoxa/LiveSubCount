@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_btns"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/btn_search"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="12dp"
+        android:gravity="center"
+        android:shadowColor ="@color/shadow"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="1"
+        android:text="@string/fa_search"
+        android:textColor="@color/button_effect_gray"
+        android:textSize="25sp"
+        />
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/btn_twitter"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="12dp"
+        android:gravity="center"
+        android:shadowColor ="@color/shadow"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="1"
+        android:text="@string/fa_twitter"
+        android:textColor="@color/button_effect_gray"
+        android:textSize="25sp"
+        />
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/btn_star"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="12dp"
+        android:gravity="center"
+        android:shadowColor ="@color/shadow"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="1"
+        android:text="@string/fa_star"
+        android:textColor="@color/button_effect_gray"
+        android:textSize="25sp"
+        />
+
+
+</LinearLayout>

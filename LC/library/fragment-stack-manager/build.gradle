@@ -1,0 +1,65 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+//ext {
+//    bintrayRepo = 'maven'
+//    bintrayName = 'fragment-stack-manager'
+//
+//    publishedGroupId = 'com.tieudieu.fragmentstackmanager'
+//    libraryName = 'fragment-stack-manager'
+//    artifact = 'fragment-stack-manager'
+//
+//    libraryDescription = 'A powerful android fragment stack manager library'
+//
+//    siteUrl = 'https://github.com/tieudieutiger/fragment-stack-manager'
+//    gitUrl = 'https://github.com/tieudieutiger/fragment-stack-manager.git'
+//
+//    libraryVersion = '1.0.0'
+//
+//    developerId = 'tieudieutiger'
+//    developerName = 'Chieu Vu Van'
+//    developerEmail = 'vuvantrieu.k54.cb@gmail.com'
+//
+//    licenseName = 'The Apache Software License, Version 2.0'
+//    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//    allLicenses = ["Apache-2.0"]
+//}
+//
+//buildscript {
+//    repositories {
+//        mavenCentral()
+//    }
+//}
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+repositories {
+    mavenCentral()
+}
+
+//apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/installv.gradle'
+//apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/bintrayv.gradle'

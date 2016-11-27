@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">LC</string>
+    <string name="fa_search">{fa-search}</string>
+    <string name="fa_twitter">{fa-twitter}</string>
+    <string name="fa_star">{fa-star}</string>
+    <!-- <string name=""></string>
+     <string name=""></string>
+     <string name=""></string>
+     <string name=""></string>
+     <string name=""></string>
+     <string name=""></string>
+     <string name=""></string>
+     <string name=""></string>
+     <string name=""></string>
+     <string name=""></string>
+     <string name=""></string>-->
+
 </resources>

@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-//apply plugin: 'com.google.gms.google-services'
+
 
 android {
     compileSdkVersion 24
@@ -15,13 +15,22 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug{
+            buildConfigField("String", "GOOGLE_VERIFICATION_API_KEY", "\"" + MY_PRIVATE_API_KEY +"\"")
+            minifyEnabled false
+            applicationIdSuffix ".debug"
+        }
         release {
+            buildConfigField("String", "GOOGLE_VERIFICATION_API_KEY", "\"" + MY_PRIVATE_API_KEY +"\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+    }
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
     }
 }
 
@@ -33,6 +42,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile project(':library:fragment-stack-manager')
 
     // retrofit,
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
@@ -42,20 +52,38 @@ dependencies {
 
     //rx
     compile 'io.reactivex:rxkotlin:0.60.0'
-    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.6'
     compile 'io.reactivex:rxjava-async-util:0.21.0'
 
-    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
 
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
 //    compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.4.0'
 //    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'
 //    compile 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'
+    compile 'com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4'
+    kapt 'com.android.databinding:compiler:2.2.2'
+
+    compile 'com.google.apis:google-api-services-youtube:v3-rev180-1.22.0'
+//    compile 'com.google.android.gms:play-services:10.0.0'
+
+    compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
+    compile 'com.joanzapata.iconify:android-iconify-entypo:2.2.2'
+    compile 'com.joanzapata.iconify:android-iconify-typicons:2.2.2'
+    compile 'com.joanzapata.iconify:android-iconify-material:2.2.2'
+    compile 'com.joanzapata.iconify:android-iconify-material-community:2.2.2'
+    compile 'com.joanzapata.iconify:android-iconify-meteocons:2.2.2'
+    compile 'com.joanzapata.iconify:android-iconify-weathericons:2.2.2'
+    compile 'com.joanzapata.iconify:android-iconify-simplelineicons:2.2.2'
+    compile 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
+    compile 'com.joanzapata.iconify:android-iconify:2.2.2'
 }
 repositories {
+
     mavenCentral()
 }
 
 kapt {
     generateStubs = true
 }
+//apply plugin: 'com.google.gms.google-services'
