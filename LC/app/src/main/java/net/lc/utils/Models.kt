@@ -81,18 +81,18 @@ object Models {
             if (onResponseSuccess != null) {
                 if (response.isSuccessful) {
                     if (response.body() != null) {
-                        onResponseSuccess!!.onResponseSuccess(tag, response.body(), extraData)
+                        onResponseSuccess.onResponseSuccess(tag, response.body(), extraData)
                     } else {
-                        onResponseSuccess!!.onResponseError(tag, NetConstants.RESPONSE_NULL)
+                        onResponseSuccess.onResponseError(tag, NetConstants.RESPONSE_NULL)
                     }
                 } else {
                     try {
                         val onResponse = Gson().fromJson<OnResponse>(response.errorBody().string(), OnResponse::class.java)
-                        onResponseSuccess!!.onResponseFailure(tag, onResponse, extraData)
+                        onResponseSuccess.onResponseFailure(tag, onResponse, extraData)
 
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        onResponseSuccess!!.onResponseError(tag, NetConstants.RESPONSE_NULL)
+                        onResponseSuccess.onResponseError(tag, NetConstants.RESPONSE_NULL)
                         return
                     }
                 }

@@ -37,7 +37,7 @@
                         android:layout_marginRight="@dimen/dimen8"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:padding="10dp"
-                        android:src="@drawable/ic_arrow_back"
+                        android:src="@mipmap/ic_arrow_back"
                         android:visibility="gone" />
 
                     <TextView

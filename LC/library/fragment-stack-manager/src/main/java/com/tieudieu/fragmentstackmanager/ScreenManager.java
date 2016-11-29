@@ -12,7 +12,7 @@ public interface ScreenManager {
     void onBackFragmentRequested();
     void onFragmentEntered(Fragment fragment);
     void onCloseRequested();
-    void onNewScreenRequested(int indexTag, int typeContent, Object object);
+//    void onNewScreenRequested(int indexTag, int typeContent, Object object);
     void onNewScreenRequested(int indexTag, String typeContent, Object object);
 
 }

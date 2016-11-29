@@ -18,7 +18,7 @@ android {
         debug{
             buildConfigField("String", "GOOGLE_VERIFICATION_API_KEY", "\"" + MY_PRIVATE_API_KEY +"\"")
             minifyEnabled false
-            applicationIdSuffix ".debug"
+//            applicationIdSuffix ".debug"
         }
         release {
             buildConfigField("String", "GOOGLE_VERIFICATION_API_KEY", "\"" + MY_PRIVATE_API_KEY +"\"")
@@ -40,6 +40,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:design:24.1.1'
+    compile 'com.android.support:support-v4:24.1.1'
+
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile project(':library:fragment-stack-manager')

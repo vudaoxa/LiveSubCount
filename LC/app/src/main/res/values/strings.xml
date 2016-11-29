@@ -3,6 +3,19 @@
     <string name="fa_search">{fa-search}</string>
     <string name="fa_twitter">{fa-twitter}</string>
     <string name="fa_star">{fa-star}</string>
+    <string name="ion_ios_close_empty">{ion-ios7-close-empty}</string>
+
+    <string name="search_topic">Enter channel name, ID, or URL</string>
+    <string name="cancel">Hủy</string>
+    <string name="OK">OK</string>
+    <string name="skip">Bỏ qua</string>
+    <string name="thanks">Cảm ơn</string>
+    <string name="end">Kết thúc</string>
+    <string name="send">Gửi</string>
+    <string name="yes">Có</string>
+    <string name="no">Không</string>
+    <string name="to_cancel">Bạn có chắc muốn hủy?</string>
+
     <!-- <string name=""></string>
      <string name=""></string>
      <string name=""></string>
