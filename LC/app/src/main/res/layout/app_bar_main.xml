@@ -18,8 +18,8 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 android:elevation="6dp"
-                app:contentInsetLeft="0dp"
-                app:contentInsetStart="0dp"
+                app:contentInsetLeft="5dp"
+                app:contentInsetStart="15dp"
                 app:layout_scrollFlags="enterAlways"
                 app:popupTheme="@style/PopupMenu">
 

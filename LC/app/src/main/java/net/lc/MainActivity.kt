@@ -18,6 +18,7 @@ import com.tieudieu.util.DebugLog
 import kotlinx.android.synthetic.main.layout_input_text.*
 import net.lc.fragments.MainFragment
 import net.lc.utils.Constants
+import net.lc.utils.IndexTag
 import net.lc.utils.InputUtil
 import net.lc.utils.network.RetrofitService
 import rx.android.schedulers.AndroidSchedulers
@@ -26,13 +27,13 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : ActionBarActivity() {
     override fun onMainScreenRequested() {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
         fragmentStackManager.clearStack()
         fragmentStackManager.swapFragment(MainFragment())
     }
 
     override fun onFragmentEntered(fragment: Fragment?) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
         if ((fragment as BaseFragmentStack).showBackButton()) {
             showBtnBack()
         }
@@ -40,8 +41,12 @@ class MainActivity : ActionBarActivity() {
     }
 
     override fun onNewScreenRequested(indexTag: Int, typeContent: String?, `object`: Any?) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
         when(indexTag){
+            IndexTag.FRAGMENT_MAIN-> {
+                fragmentStackManager.clearStack()
+                fragmentStackManager.swapFragment(MainFragment())
+            }
 
         }
     }

@@ -49,17 +49,17 @@ import net.lc.utils.InputUtil
         btn_star.visibility=if(visible!!)  View.VISIBLE else View.GONE
     }
     override fun getResLayout(): Int {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
         return R.layout.activity_main
     }
 
     override fun getContentFrameId(): Int {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
         return R.id.container
     }
 
     override fun getHomeClass(): Class<*> {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
         return MainFragment::class.java
     }
 

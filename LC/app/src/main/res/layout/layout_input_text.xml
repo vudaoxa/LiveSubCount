@@ -8,7 +8,7 @@
     android:layout_toRightOf="@+id/toolbar_title"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:visibility="visible">
+    android:visibility="gone">
 
     <EditText
         android:id="@+id/edt_search"

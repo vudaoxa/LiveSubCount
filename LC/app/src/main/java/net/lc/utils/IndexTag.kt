@@ -1,0 +1,8 @@
+package net.lc.utils
+
+/**
+ * Created by HP on 11/29/2016.
+ */
+object IndexTag {
+    const val FRAGMENT_MAIN = 0
+}

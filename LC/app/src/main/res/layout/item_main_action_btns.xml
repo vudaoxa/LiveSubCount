@@ -17,7 +17,7 @@
         android:shadowRadius="1"
         android:text="@string/fa_search"
         android:textColor="@color/button_effect_gray"
-        android:textSize="25sp"
+        android:textSize="20sp"
         />
     <com.joanzapata.iconify.widget.IconTextView
         android:id="@+id/btn_twitter"
@@ -31,7 +31,7 @@
         android:shadowRadius="1"
         android:text="@string/fa_twitter"
         android:textColor="@color/button_effect_gray"
-        android:textSize="25sp"
+        android:textSize="20sp"
         />
     <com.joanzapata.iconify.widget.IconTextView
         android:id="@+id/btn_star"
@@ -45,7 +45,7 @@
         android:shadowRadius="1"
         android:text="@string/fa_star"
         android:textColor="@color/button_effect_gray"
-        android:textSize="25sp"
+        android:textSize="20sp"
         />
 
 
