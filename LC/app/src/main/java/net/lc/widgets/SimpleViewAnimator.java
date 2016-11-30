@@ -8,7 +8,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
-import com.icomhealthtap.icom.icomhealthtap.R;
+import net.lc.R;
+
 
 /**
  * Created by Dieu on 29/08/2016.

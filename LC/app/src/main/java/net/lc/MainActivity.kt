@@ -82,17 +82,7 @@ class MainActivity : ActionBarActivity() {
 
     override fun onResume() {
         super.onResume()
-//        val xx = RetrofitService.instance.getChannelInfo("SkyDoesMinecraft")
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe (
-//                        { channelListResponse ->
-//                            DebugLog.e(channelListResponse.items!!.get(0).statistics!!.videoCount)
-//                        },
-//                        { e ->
-//                            e.printStackTrace()
-//                        }
-//                )
+
     }
 
     override fun onDestroy() {

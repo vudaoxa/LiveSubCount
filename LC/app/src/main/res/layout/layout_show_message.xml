@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.icomhealthtap.icom.icomhealthtap.widget.SimpleViewAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+<net.lc.widgets.SimpleViewAnimator xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/viewRootMessage"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,7 +8,7 @@
     android:orientation="horizontal"
     android:visibility="gone">
 
-    <com.icomhealthtap.icom.icomhealthtap.widget.BoldTextView
+    <net.lc.widgets.BoldTextView
         android:id="@+id/tv_message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         android:text="Vui lòng kết nối Internet"
         android:textColor="@color/white" />
 
-    <com.icomhealthtap.icom.icomhealthtap.widget.BoldTextView
+    <net.lc.widgets.BoldTextView
         android:id="@+id/tv_btn_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,4 +27,4 @@
         android:textAllCaps="true"
         android:textColor="@android:color/holo_red_dark"
         android:textStyle="bold" />
-</com.icomhealthtap.icom.icomhealthtap.widget.SimpleViewAnimator>
+</net.lc.widgets.SimpleViewAnimator>

@@ -5,7 +5,8 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.icomhealthtap.icom.icomhealthtap.utils.FontCache;
+import net.lc.utils.FontCache;
+
 
 /**
  * Created by Dieu on 27/07/2016.

@@ -45,7 +45,7 @@
         android:textColor="@color/grey_90"
         android:textStyle="normal" />
     <TextSwitcher
-        android:id="@+id/tv_count"
+        android:id="@+id/sw_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
