@@ -1,5 +1,6 @@
 package net.lc.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,11 +24,9 @@ class LiveCountFragment : BaseFragmentStack(){
         DebugLog.e("onresume-------------------------------------")
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if(isVisibleToUser && isResumed){
-            onResume()
-        }
+    override fun onPause() {
+        super.onPause()
+        DebugLog.e("onpause---------------------+++")
     }
 
 }
