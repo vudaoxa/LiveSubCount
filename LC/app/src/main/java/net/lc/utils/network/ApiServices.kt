@@ -14,12 +14,7 @@ import rx.Observable
  */
 
 interface ApiServices {
-    //    @GET(NetConstants.API_YOUTUBE_CHANNEL)
-//    fun getChannelInfo(@Query("key") developerKey: String, @Query("part") id: String,
-//                       @Query("forUsername") forUsername: String): Observable<Models.ChannelListResponse>
-//    @GET(NetConstants.API_YOUTUBE_CHANNEL)
-//    fun getChannelInfo(@Query("key") developerKey: String, @Query("part") id: String,
-//                       @Query("forUsername") forUsername: String): Call<Models.ChannelListResponse>
+
     @GET(NetConstants.API_YOUTUBE_CHANNEL)
     fun getChannelInfo(@Query("key") developerKey: String, @Query("part") id: String,
                        @Query("forUsername") forUsername: String): Observable<Models.ChannelListResponse>
