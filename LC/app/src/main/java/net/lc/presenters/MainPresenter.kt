@@ -1,6 +1,5 @@
 package net.lc.presenters
 
-import android.util.Log
 import com.tieudieu.util.DebugLog
 import net.lc.utils.Constants
 import net.lc.utils.Models
@@ -11,11 +10,6 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
-import rx.internal.operators.OperatorReplay.observeOn
-import javax.xml.datatype.DatatypeConstants.SECONDS
-import rx.android.schedulers.AndroidSchedulers.mainThread
-import rx.android.schedulers.AndroidSchedulers
-
 
 
 /**
@@ -42,10 +36,12 @@ object MainPresenter {
 //            true
 //        }
     }
-    fun requestChannelInfo() :Models.ChannelListResponse{
-//        if (isRequest)
-//            return
-//        isRequest = true
+
+
+    fun requestChannelInfo() {
+        if (isRequest)
+            return
+        isRequest = true
         val xx = RetrofitService.instance.service.getChannelInfo(Constants.API_KEY, Constants.PART_STATISTICS, "SkyDoesMinecraft")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
