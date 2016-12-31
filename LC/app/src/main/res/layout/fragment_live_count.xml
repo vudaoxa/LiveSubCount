@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical">
+
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/img_avatar"
         android:layout_width="@dimen/dimen70"
         android:layout_height="@dimen/dimen70"
-        android:layout_marginTop="@dimen/dimen20"
         android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/dimen20"
         app:failureImage="@mipmap/ic_defaut_grey"
         app:failureImageScaleType="fitXY"
         app:placeholderImage="@mipmap/ic_defaut_grey"
@@ -20,21 +21,23 @@
         app:progressBarImageScaleType="centerInside"
         app:retryImageScaleType="centerCrop"
         app:roundAsCircle="false" />
+
     <com.joanzapata.iconify.widget.IconButton
         android:id="@+id/btn_ytb_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen10"
+        android:background="@drawable/my_button"
         android:minWidth="180dp"
-        android:shadowColor ="@color/shadow"
+        android:shadowColor="@color/shadow"
         android:shadowDx="3"
         android:shadowDy="3"
         android:shadowRadius="1"
         android:text="@string/view_on_youtube"
         android:textColor="@color/white"
         android:textSize="@dimen/txt_size_16"
-        android:background="@drawable/my_button"
         android:theme="@style/AppTheme.Button" />
+
     <net.lc.widgets.NormalTextView
         android:id="@+id/tv_name"
         android:layout_width="match_parent"
@@ -42,18 +45,23 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Trinity GX"
-        android:textColor="@color/grey_90"
+        android:textColor="@color/white"
         android:textStyle="normal" />
+
     <TextSwitcher
         android:id="@+id/sw_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:animateFirstView="true"
         android:gravity="center"
+        android:inAnimation="@android:anim/fade_in"
+        android:outAnimation="@android:anim/fade_out"
         android:text="1254096"
         android:textColor="@color/grey_90"
-        android:textStyle="normal"
-        android:textSize="45sp"/>
+        android:textSize="45sp"
+        android:textStyle="normal" />
+
     <net.lc.widgets.NormalTextView
         android:id="@+id/tv_some"
         android:layout_width="match_parent"

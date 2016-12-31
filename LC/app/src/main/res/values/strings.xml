@@ -17,6 +17,10 @@
     <string name="to_cancel">Bạn có chắc muốn hủy?</string>
 
      <string name="view_on_youtube">View on Youtube</string>
+    <string name="error_conection">Kết nối không thành công!</string>
+    <string name="redo">Thử lại</string>
+    <string name="internet_no_conection">Không có kết nối internet</string>
+    <string name="empty_data">Không có dữ liệu</string>
      <!--<string name=""></string>-->
      <!--<string name=""></string>-->
      <!--<string name=""></string>-->

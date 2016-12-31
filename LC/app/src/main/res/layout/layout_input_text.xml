@@ -25,11 +25,11 @@
         android:textSize="15sp" />
 
     <com.joanzapata.iconify.widget.IconTextView
-        android:id="@+id/btn_close"
+        android:id="@+id/img_clear"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:padding="12dp"
         android:gravity="center"
+        android:padding="12dp"
         android:shadowColor ="@color/shadow"
         android:shadowDx="3"
         android:shadowDy="3"

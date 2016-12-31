@@ -1,4 +1,4 @@
-package net.lc
+package net.lc.activities
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -13,14 +13,14 @@ import android.widget.TextView
 import com.jakewharton.rxbinding.widget.RxTextView
 import com.tieudieu.fragmentstackmanager.BaseFragmentStack
 import kotlinx.android.synthetic.main.layout_input_text.*
-import net.lc.fragments.MainFragment
+import net.lc.fragments.main.MainFragment
 import net.lc.utils.Constants
 import net.lc.utils.IndexTag
 import net.lc.utils.InputUtil
 import rx.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 
-class MainActivity : ActionBarActivity() {
+class MainActivity : ActionBarMainActivity() {
     override fun onMainScreenRequested() {
         fragmentStackManager.clearStack()
         fragmentStackManager.swapFragment(MainFragment())
@@ -99,11 +99,11 @@ class MainActivity : ActionBarActivity() {
                     if (text.length > 0) {
                         submitSearchSuggestion(text)
                     } else {
-                        btn_close!!.visibility = View.GONE
+                        img_clear.visibility = View.GONE
                         submitSearchEmpty()
                     }
                 }
-        btn_close!!.setOnClickListener {
+        img_clear.setOnClickListener {
             edt_search!!.text = null
         }
     }

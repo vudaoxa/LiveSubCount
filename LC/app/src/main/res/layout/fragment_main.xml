@@ -10,22 +10,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/dimen10">
+        android:padding="@dimen/dimen0">
 
-        <com.gigamole.navigationtabstrip.NavigationTabStrip
-            android:id="@+id/nts"
+        <net.lc.views.gigamole.NavigationTabBar
+            android:id="@+id/ntb_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:layout_gravity="center"
-            app:nts_active_color="#fff"
-            app:nts_color="#ff1748"
-            app:nts_corners_radius="1.5dp"
-            app:nts_factor="2.8"
-            app:nts_inactive_color="#81ffffff"
-            app:nts_size="9dp"
-            app:nts_titles="@array/titles"
-            app:nts_typeface="fonts/moon.otf"
-            app:nts_weight="3dp" />
+            android:layout_height="60dp"
+            android:visibility="visible"
+            app:ntb_badge_bg_color="@android:color/holo_red_light"
+            app:ntb_badge_gravity="bottom"
+            app:ntb_badge_position="right"
+            app:ntb_badge_title_color="@android:color/white"
+            app:ntb_badge_use_typeface="false"
+            app:ntb_badged="true"
+
+            app:ntb_bg_color="@color/transparent"
+            app:ntb_corners_radius="3dp"
+            app:ntb_inactive_color="@color/ntb_inactive"
+            app:ntb_scaled="false"
+            app:ntb_tinted="true"
+            app:ntb_title_mode="all"
+            app:ntb_titled="true" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_main"
@@ -34,19 +39,5 @@
 
     </LinearLayout>
 
-    <!--<include-->
-    <!--layout="@layout/layout_show_message"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="bottom" />-->
-
-    <!--<ProgressBar-->
-    <!--android:id="@+id/progressbar"-->
-    <!--android:layout_width="55dp"-->
-    <!--android:layout_height="55dp"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:indeterminate="true"-->
-    <!--android:indeterminateDrawable="@drawable/custom_progressbar"-->
-    <!--android:visibility="gone"/>-->
 </FrameLayout>
 

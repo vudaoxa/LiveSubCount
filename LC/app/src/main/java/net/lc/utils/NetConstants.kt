@@ -8,5 +8,6 @@ object NetConstants {
     val RESPONSE_NULL = "null"
     const val BASE_URL = "https://content.googleapis.com/"
     const val API_YOUTUBE_CHANNEL ="youtube/v3/channels"
+    const val API_YOUTUBE_SEARCH = "youtube/v3/search"
 
 }

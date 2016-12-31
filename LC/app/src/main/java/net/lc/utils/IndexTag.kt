@@ -5,4 +5,7 @@ package net.lc.utils
  */
 object IndexTag {
     const val FRAGMENT_MAIN = 0
+    const val MAIN_SEARCH = 20
+
+
 }

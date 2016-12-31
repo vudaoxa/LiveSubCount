@@ -1,4 +1,4 @@
-package net.lc.fragments
+package net.lc.fragments.main
 
 import android.os.Bundle
 import android.view.LayoutInflater

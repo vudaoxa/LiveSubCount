@@ -10,6 +10,8 @@
     <dimen name="view_single_height_42">42dip</dimen>
     <dimen name="edittext_content_min_height">80dip</dimen>
     <dimen name="edittext_content_max_height">200dip</dimen>
+
+    <dimen name="dimen0">0dp</dimen>
     <dimen name="dimen2">2dp</dimen>
     <dimen name="dimen3">3dp</dimen>
     <dimen name="dimen4">4dp</dimen>

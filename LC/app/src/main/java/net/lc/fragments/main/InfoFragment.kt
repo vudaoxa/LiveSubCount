@@ -1,4 +1,4 @@
-package net.lc.fragments
+package net.lc.fragments.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import net.lc.R
 /**
  * Created by HP on 11/28/2016.
  */
-class FavoritesFragment : BaseFragmentStack(){
+class InfoFragment : BaseFragmentStack(){
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view =inflater!!.inflate(R.layout.fragment_foo, container, false)
 //        initUI()

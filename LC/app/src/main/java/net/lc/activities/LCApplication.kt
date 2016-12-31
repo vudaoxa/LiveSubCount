@@ -1,4 +1,4 @@
-package net.lc
+package net.lc.activities
 
 import android.app.Application
 import com.facebook.drawee.backends.pipeline.Fresco

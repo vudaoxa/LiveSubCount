@@ -1,11 +1,10 @@
 package net.lc.adapters
 
 import android.content.Context
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.tieudieu.fragmentstackmanager.BaseFragmentStack
-import net.lc.fragments.*
+import net.lc.fragments.main.*
 
 /**
  * Created by HP on 11/28/2016.

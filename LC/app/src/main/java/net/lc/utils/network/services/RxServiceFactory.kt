@@ -1,7 +1,7 @@
 package com.icomhealthtap.icom.icomhealthtap.utils.network.services
 
 import com.google.gson.GsonBuilder
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import net.lc.utils.network.adapters.RxErrorHandlingCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -15,7 +15,7 @@ object RxServiceFactory {
     fun <T> createRetrofitService(clazz: Class<T>, endPoint: String):T{
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
-        var httpClient=  OkHttpClient.Builder()
+        val httpClient = OkHttpClient.Builder()
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .addInterceptor(interceptor)
                 .build()
@@ -24,7 +24,8 @@ object RxServiceFactory {
 
         val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
                 .baseUrl(endPoint)
                 .client(httpClient)
                 .build()

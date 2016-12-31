@@ -8,9 +8,9 @@ import net.lc.utils.NetConstants
  */
 
 class RxRetrofitService {
-    val service: RxApiServices
+    val rxApiServices: RxApiServices
     init {
-        service = RxServiceFactory.createRetrofitService(RxApiServices::class.java, NetConstants.BASE_URL)
+        rxApiServices = RxServiceFactory.createRetrofitService(RxApiServices::class.java, NetConstants.BASE_URL)
     }
     companion object {
         private var mInstance: RxRetrofitService? = null
