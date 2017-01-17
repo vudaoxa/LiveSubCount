@@ -1,9 +1,16 @@
 <resources>
     <string name="app_name">LC</string>
-    <string name="fa_search">{fa-search}</string>
+    <string name="fa_search">{ion-ios-search-strong}</string>
     <string name="fa_twitter">{fa-twitter}</string>
-    <string name="fa_star">{fa-star}</string>
-    <string name="ion_ios_close_empty">{ion-ios7-close-empty}</string>
+    <string name="ion_ios_star">{ion-ios-star}</string>
+    <string name="ion_jet">{ion-jet}</string>
+    <string name="ion_ios_close_empty">{ion-ios-close-empty}</string>
+    <string name="fa_history">{fa-history}</string>
+    <string name="ion_ios_bell">{ion-ios-bell}</string>
+    <string name="ion_ios_play">{ion-ios-play}</string>
+    <string name="ion_more">{ion-android-more-vertical}</string>
+    <string name="ion_trash">{ion-ios-trash-outline}</string>
+
 
     <string name="search_topic">Enter channel name, ID, or URL</string>
     <string name="cancel">Hủy</string>
@@ -21,7 +28,8 @@
     <string name="redo">Thử lại</string>
     <string name="internet_no_conection">Không có kết nối internet</string>
     <string name="empty_data">Không có dữ liệu</string>
-     <!--<string name=""></string>-->
+
+    <string name="subscribers">%s subscribers </string>
      <!--<string name=""></string>-->
      <!--<string name=""></string>-->
      <!--<string name=""></string>-->

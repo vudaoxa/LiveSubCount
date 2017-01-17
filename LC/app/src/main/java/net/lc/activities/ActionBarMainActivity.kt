@@ -1,6 +1,5 @@
 package net.lc.activities
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -10,7 +9,7 @@ import kotlinx.android.synthetic.main.item_main_action_btns.*
 import kotlinx.android.synthetic.main.layout_input_text.*
 import net.lc.R
 import net.lc.fragments.main.MainFragment
-import net.lc.utils.InputUtil
+import net.lc.utils.InputUtils
 
 /**
  * Created by HP on 11/28/2016.
@@ -22,26 +21,24 @@ abstract class ActionBarMainActivity : BaseActivityFragmentStack() {
         setup()
     }
     fun setup(){
-        if(toolbar != null){
+        toolbar?.let {
             setSupportActionBar(toolbar)
-            supportActionBar!!.elevation=0f
-            supportActionBar!!.setDefaultDisplayHomeAsUpEnabled(true)
-        }
+            supportActionBar?.elevation = 0f
+            supportActionBar?.setDefaultDisplayHomeAsUpEnabled(true)
+        } 
         toolbar_back.setOnClickListener {
 //            val fragment = fragmentStackManager.currentFragment
 //            if(fra)
         }
         btn_search.setOnClickListener { goSearch() }
-        btn_twitter.setOnClickListener {  }
-        btn_star.setOnClickListener {  }
+        btn_twitter.setOnClickListener { onTwitter() }
+        btn_star.setOnClickListener { onFollowing() }
 
     }
 
-    fun goSearch() {
-        val intent = Intent(this, SearchActivity::class.java)
-        startActivityForResult(intent, 123)
-    }
-
+    abstract fun goSearch()
+    abstract fun onTwitter()
+    abstract fun onFollowing()
     override fun getResLayout(): Int {
         return R.layout.activity_main
     }
@@ -57,7 +54,7 @@ abstract class ActionBarMainActivity : BaseActivityFragmentStack() {
     override fun onBackPressed() {
         super.onBackPressed()
         if(layout_input_text.visibility == View.VISIBLE){
-            InputUtil.hideKeyboard(this)
+            InputUtils.hideKeyboard(this)
             if(!TextUtils.isEmpty(edt_search.text.toString().trim())){
                 edt_search.text=null
                 return

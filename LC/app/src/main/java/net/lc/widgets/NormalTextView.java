@@ -27,7 +27,7 @@ public class NormalTextView extends TextView {
         applyCustomFont(context);
     }
     private void applyCustomFont(Context context) {
-        Typeface customFont = FontCache.getTypeface("Roboto-Light.ttf", context);
+        Typeface customFont = FontCache.getTypeface("fonts/Roboto-Light.ttf", context);
         setTypeface(customFont);
     }
 

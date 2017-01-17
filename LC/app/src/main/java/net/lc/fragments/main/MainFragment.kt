@@ -1,5 +1,6 @@
 package net.lc.fragments.main
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,19 +11,53 @@ import com.joanzapata.iconify.fonts.IoniconsIcons
 import com.tieudieu.fragmentstackmanager.BaseFragmentStack
 import kotlinx.android.synthetic.main.fragment_main.*
 import net.lc.R
+import net.lc.activities.MainActivity
 import net.lc.adapters.MainPagerAdapter
+import net.lc.models.*
+
+
 import net.lc.views.gigamole.NavigationTabBar
 import java.util.*
 
 /**
  * Created by HP on 11/28/2016.
  */
-class MainFragment : BaseFragmentStack() {
-    val size = 5
-    private var index = 2
+class MainFragment(mContext: Context) : BaseFragmentStack(), ICallbackSearchResult,
+        ICallbackFollowing, ICallbackSearchResultRealm {
+    val SIZE = 5
+    val PIVOT = 2
+    private var index = PIVOT
     private val color = Color.RED
+    var mCallbackSearchResult: ICallbackSearchResult? = null
+    var mCallbackFollowing: ICallbackFollowing? = null
+    var mCallbackSearchResultRealm: ICallbackSearchResultRealm? = null
+    var created: Boolean? = false
+    fun move2Index(i: Int) {
+        vp_main.currentItem = i
+//        vp_main.offscreenPageLimit=5
+        index = i
+    }
+
+    override fun onSearchResultReceived(searchResult: SearchResult) {
+        move2Index(PIVOT)
+        mCallbackSearchResult?.onSearchResultReceived(searchResult)
+    }
+
+    override fun onSearchResultRealmReceived(searchResultRealm: SearchResultRealm) {
+        move2Index(PIVOT)
+        mCallbackSearchResultRealm?.onSearchResultRealmReceived(searchResultRealm)
+    }
+
+    override fun onFollowing() {
+        mCallbackFollowing?.onFollowing()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        created = true
+    }
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_main, container, false)
+        return inflater?.inflate(R.layout.fragment_main, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -31,14 +66,14 @@ class MainFragment : BaseFragmentStack() {
     }
 
     fun initUI() {
-        vp_main.adapter = MainPagerAdapter(activity, fragmentManager, size)
+        vp_main.adapter = MainPagerAdapter(activity, this, fragmentManager, SIZE)
         setupNTB()
     }
 
     private val ICON_COLOR = android.R.color.white
     fun setupNTB() {
         val models = ArrayList<NavigationTabBar.Model>()
-        addModels(models, size)
+        addModels(models, SIZE)
 
         ntb_horizontal.models = models
         ntb_horizontal.setViewPager(vp_main, index)
@@ -61,7 +96,16 @@ class MainFragment : BaseFragmentStack() {
                                     .colorRes(ICON_COLOR)
                                     .actionBarSize(), color).title(titles[i]).build())
         }
+    }
 
-
+    companion object {
+        fun newInstance(mContext: Context): MainFragment {
+            val fragment = MainFragment(mContext)
+            if (mContext is MainActivity) {
+                mContext.mCallbackSearchResult = fragment
+                mContext.mCallbackFollowing = fragment
+            }
+            return fragment
+        }
     }
 }

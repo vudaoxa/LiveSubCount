@@ -25,8 +25,8 @@
             app:ntb_badged="true"
 
             app:ntb_bg_color="@color/transparent"
-            app:ntb_corners_radius="3dp"
-            app:ntb_inactive_color="@color/ntb_inactive"
+            app:ntb_corners_radius="0dp"
+            app:ntb_inactive_color="@color/grey_40"
             app:ntb_scaled="false"
             app:ntb_tinted="true"
             app:ntb_title_mode="all"

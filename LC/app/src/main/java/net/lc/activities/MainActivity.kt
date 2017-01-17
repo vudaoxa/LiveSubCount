@@ -1,31 +1,38 @@
 package net.lc.activities
 
-import android.content.BroadcastReceiver
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.LocalBroadcastManager
-import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.TextView
-import com.jakewharton.rxbinding.widget.RxTextView
 import com.tieudieu.fragmentstackmanager.BaseFragmentStack
-import kotlinx.android.synthetic.main.layout_input_text.*
+import com.tieudieu.util.DebugLog
 import net.lc.fragments.main.MainFragment
+import net.lc.models.ICallbackFollowing
+import net.lc.models.ICallbackSearchResult
+import net.lc.models.SearchResult
 import net.lc.utils.Constants
-import net.lc.utils.IndexTag
-import net.lc.utils.InputUtil
-import rx.android.schedulers.AndroidSchedulers
-import java.util.concurrent.TimeUnit
+import net.lc.utils.IndexTags
 
 class MainActivity : ActionBarMainActivity() {
+    var mCallbackSearchResult: ICallbackSearchResult? = null
+    var mCallbackFollowing: ICallbackFollowing? = null
     override fun onMainScreenRequested() {
         fragmentStackManager.clearStack()
-        fragmentStackManager.swapFragment(MainFragment())
+        fragmentStackManager.swapFragment(MainFragment.newInstance(this))
     }
 
+    override fun goSearch() {
+        val intent = Intent(this, SearchActivity::class.java)
+        startActivityForResult(intent, Constants.ACTIVITY_SEARCH_CODE)
+    }
+
+    override fun onTwitter() {
+
+    }
+
+    override fun onFollowing() {
+        mCallbackFollowing?.onFollowing()
+    }
     override fun onFragmentEntered(fragment: Fragment?) {
         if ((fragment as BaseFragmentStack).showBackButton()) {
             showBtnBack()
@@ -34,41 +41,17 @@ class MainActivity : ActionBarMainActivity() {
     }
 
     override fun onNewScreenRequested(indexTag: Int, typeContent: String?, `object`: Any?) {
-        when(indexTag){
-            IndexTag.FRAGMENT_MAIN-> {
+        when (indexTag) {
+            IndexTags.FRAGMENT_MAIN -> {
                 fragmentStackManager.clearStack()
-                fragmentStackManager.swapFragment(MainFragment())
+                fragmentStackManager.swapFragment(MainFragment.newInstance(this))
             }
 
-        }
-    }
-
-    fun registerReceiver() {
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(Constants.ACTION_CLICK_TOPIC_SUGGESTION)
-        intentFilter.addAction(Constants.ACTION_CLICK_SEARCH_RESULT)
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter)
-    }
-
-    private val receiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val action = intent.action
-            if (action.equals(Constants.ACTION_CLICK_TOPIC_SUGGESTION, ignoreCase = true)) {
-                val bundle = intent.extras
-                if (bundle != null) {
-                    edt_search.text = null
-                }
-            } else if (action.equals(Constants.ACTION_CLICK_SEARCH_RESULT, ignoreCase = true)) {
-                layout_input_text.visibility = View.GONE
-                InputUtil.hideKeyboard(this@MainActivity)
-            }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initEdtSearch()
-        registerReceiver()
     }
 
     override fun onResume() {
@@ -76,55 +59,27 @@ class MainActivity : ActionBarMainActivity() {
 
     }
 
+    override fun onStop() {
+        super.onStop()
+        DebugLog.e("onStop--------------------------")
+//        Realm.getDefaultInstance().close()
+    }
     override fun onDestroy() {
         super.onDestroy()
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)
+        DebugLog.e("onDestroy-------------------------")
+//        Realm.getDefaultInstance().close()
     }
 
-    fun initEdtSearch(){
-        edt_search.setOnEditorActionListener(TextView.OnEditorActionListener { textView, i, keyEvent ->
-            if (i == EditorInfo.IME_ACTION_SEARCH) {
-                // code here
-                submitSearch()
-                return@OnEditorActionListener true
-            }
-            false
-        })
-        RxTextView.afterTextChangeEvents(edt_search)
-                .debounce(1000, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { tvChangeEvent ->
-                    val s = tvChangeEvent.view().text.toString()
-                    val text = s.trim { it <= ' ' }
-                    if (text.length > 0) {
-                        submitSearchSuggestion(text)
-                    } else {
-                        img_clear.visibility = View.GONE
-                        submitSearchEmpty()
-                    }
-                }
-        img_clear.setOnClickListener {
-            edt_search!!.text = null
-        }
-    }
-    fun submitSearch(){
-        val query =edt_search.text.toString().trim()
-        if(query.isEmpty())
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode != Activity.RESULT_OK) {
             return
-        signalSearch(query)
-        InputUtil.hideKeyboard(this)
+        }
+        if (requestCode != Constants.ACTIVITY_SEARCH_CODE) {
+            return
+        }
+        val searchResult = data?.extras?.getSerializable(Constants.ACTION_CLICK_SEARCH_RESULT) as SearchResult
+        DebugLog.e(searchResult.snippet?.title)
+        mCallbackSearchResult?.onSearchResultReceived(searchResult)
     }
 
-    fun submitSearchSuggestion(text:String){
-
-    }
-
-    fun submitSearchEmpty(){
-
-    }
-    fun signalSearch(query: String){
-        val bundle = Bundle()
-        bundle.putString(Constants.KEY_SEARCH_QUERY, query)
-        LocalBroadcastManager.getInstance(this).sendBroadcast(Intent(Constants.ACTION_SEARCH).putExtras(bundle))
-    }
 }

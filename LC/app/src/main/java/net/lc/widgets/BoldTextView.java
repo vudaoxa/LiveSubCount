@@ -27,7 +27,7 @@ public class BoldTextView extends TextView {
         applyCustomFont(context);
     }
     private void applyCustomFont(Context context) {
-        Typeface customFont = FontCache.getTypeface("Roboto-Medium.ttf", context);
+        Typeface customFont = FontCache.getTypeface("fonts/Roboto-Medium.ttf", context);
         setTypeface(customFont);
     }
 

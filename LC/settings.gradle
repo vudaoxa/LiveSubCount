@@ -1,1 +1,4 @@
-include ':app', ':library:fragment-stack-manager'
+include ':app',
+        ':library:fragment-stack-manager',
+        ':library:recyclerviewenhanced'
+

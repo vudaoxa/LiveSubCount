@@ -7,32 +7,30 @@ import com.tieudieu.fragmentstackmanager.BaseFragmentStack
 import kotlinx.android.synthetic.main.layout_progress_view.*
 import kotlinx.android.synthetic.main.layout_show_message.*
 import net.lc.R
-import net.lc.interfaces.ICallbackLoadMore
-import net.lc.interfaces.ILoadData
+import net.lc.models.ICallbackLoadMore
+import net.lc.utils.CallbackBottomMessage
+
 import net.lc.views.rv.EndlessRecyclerViewScrollListener
 
 /**
  * Created by mrvu on 12/29/16.
  */
-abstract class MBaseFragment : BaseFragmentStack(), ILoadData, ICallbackLoadMore {
-    val onClickListenerDismiss: View.OnClickListener = View.OnClickListener { showMessageBottom(false, R.string.OK, 0, false, null) }
+abstract class MBaseFragment : BaseFragmentStack() {
+    //    val onClickListenerDismiss: View.OnClickListener = View.OnClickListener { showMessageBottom(mCallbackDismiss) }
+    val mCallbackDismiss = CallbackBottomMessage(isShow = false,
+            btnText = R.string.OK, content = R.string.OK, isShowRetry = false, onClickListener = null)
 
-
-    fun showMessageBottom(isShow: Boolean, message: Int, btnText: Int,
-                          isShowRetry: Boolean, onClickListener: View.OnClickListener?) {
-
-        if (!isShow) {
+    fun showMessageBottom(callbackBottomMessage: CallbackBottomMessage) {
+        if (!callbackBottomMessage.isShow) {
             layout_content.visibility = View.GONE
             return
         }
-        tv_message.setText(message)
-        btn_retry.visibility = if (isShowRetry) View.VISIBLE else View.GONE
-        if (btnText != 0) {
-            btn_retry.setText(btnText)
+        tv_message.setText(callbackBottomMessage.content)
+        btn_retry.visibility = if (callbackBottomMessage.isShowRetry) View.VISIBLE else View.GONE
+        if (callbackBottomMessage.btnText != 0) {
+            btn_retry.setText(callbackBottomMessage.btnText)
         }
-        if (onClickListener != null) {
-            btn_retry.setOnClickListener(onClickListener)
-        }
+        btn_retry.setOnClickListener(callbackBottomMessage.onClickListener)
         layout_content.visibility = View.VISIBLE
     }
 
@@ -50,19 +48,13 @@ abstract class MBaseFragment : BaseFragmentStack(), ILoadData, ICallbackLoadMore
                 })
     }
 
-    override fun onLoadDataFailure(listener: View.OnClickListener) {
+    fun onLoadDataFailure(callbackBottomMessage: CallbackBottomMessage) {
         showLoading(false)
-        showMessageBottom(true, R.string.error_conection,
-                R.string.redo, true, listener)
+        showMessageBottom(callbackBottomMessage)
     }
 
-    override fun onNoInternetConnection(listener: View.OnClickListener) {
+    fun onNoInternetConnection(callbackBottomMessage: CallbackBottomMessage) {
         showLoading(false)
-        showMessageBottom(true, R.string.internet_no_conection, R.string.redo,
-                true, listener)
-    }
-
-    override fun onNoInternetConnection() {
-        onNoInternetConnection(onClickListenerDismiss)
+        showMessageBottom(callbackBottomMessage)
     }
 }

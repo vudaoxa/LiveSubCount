@@ -1,49 +1,72 @@
 package net.lc.fragments.search
 
+
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.api.services.youtube.model.SearchListResponse
-import com.google.api.services.youtube.model.SearchResult
 import io.reactivex.disposables.CompositeDisposable
+import io.realm.RealmObject
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_search_suggestions.*
-import kotlinx.android.synthetic.main.layout_progress_view.*
 import net.lc.R
+import net.lc.activities.SearchActivity
+import net.lc.adapters.search.SearchHistoryRvAdapter
 import net.lc.adapters.search.SearchSuggestionRvAdapter
 import net.lc.fragments.MBaseFragment
-import net.lc.interfaces.ICallbackLoadMore
-import net.lc.interfaces.ICallbackOnClick
-import net.lc.interfaces.ICallbackSearch
-import net.lc.interfaces.ILoadData
+import net.lc.holders.BaseViewHolder
+import net.lc.models.*
+import net.lc.presenters.MRealmPresenter
 import net.lc.presenters.SearchPresenter
+import net.lc.utils.CallbackBottomMessage
+import net.lc.utils.Constants
+import net.lc.utils.InputUtils
+import rx.subscriptions.CompositeSubscription
 
 /**
  * Created by mrvu on 12/28/16.
  */
-class FirstSuggestionFragment : MBaseFragment(), ICallbackOnClick, ICallbackSearch, ICallbackLoadMore, ILoadData {
+class FirstSuggestionFragment(val mMainSearchFragment: MainSearchFragment) : MBaseFragment(),
+        ICallbackOnClick, ICallbackSearch,
+        ILoadData, IBackListener, IConnect, ICallbackRealmResultChange {
+    companion object {
+        fun newInstance(mMainSearchFragment: MainSearchFragment): FirstSuggestionFragment {
+            val fragment = FirstSuggestionFragment(mMainSearchFragment)
+            mMainSearchFragment.mCallbackSearch = fragment
+            mMainSearchFragment.mBackListener = fragment
+            return fragment
+        }
+    }
+
+    private var mRealmPresenter: MRealmPresenter? = null
     private var mSearchPresenter: SearchPresenter? = null
     private var mSearchSuggestionRvAdapter: SearchSuggestionRvAdapter? = null
-    private var isFirstData = true
-    var nextPageToken: String? = null
-    var query: String? = null
-    val disposables = CompositeDisposable()
-    private val onClickListenerLoadChecklist = View.OnClickListener {
+    private var mSearchHistoryRvAdapter: SearchHistoryRvAdapter? = null
+    var isFirstData = true
+    private var mSearchRequest: SearchRequest? = null
+    val mDisposables = CompositeDisposable()
+    val mSubscription = CompositeSubscription()
+    private val listenerLoadChecklist = View.OnClickListener {
         showLoading(true)
-        showMessageBottom(false, R.string.OK, 0, false, null)
-        loadChecklists()
+        showMessageBottom(mCallbackDismiss)
+        requestSearchSuggestion()
     }
+
+    val mCallbackLoadChecklist = CallbackBottomMessage(true, R.string.internet_no_conection, R.string.redo,
+            true, listenerLoadChecklist)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mSearchPresenter = SearchPresenter()
-        mSearchSuggestionRvAdapter = SearchSuggestionRvAdapter(activity, null, this)
+        mRealmPresenter = MRealmPresenter()
+        mSearchPresenter?.mRealmPresenter = mRealmPresenter
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_search_suggestions, container, false)
+        return inflater?.inflate(R.layout.fragment_search_suggestions, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -51,88 +74,161 @@ class FirstSuggestionFragment : MBaseFragment(), ICallbackOnClick, ICallbackSear
         initFields()
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        loadSearchHistory()
+    }
     override fun onDestroy() {
         super.onDestroy()
-        disposables.dispose()
+        mDisposables.dispose()
+        mSubscription.unsubscribe()
     }
 
     fun initFields() {
-        rv.layoutManager = LinearLayoutManager(activity)
-        setupOnLoadMore(rv, this)
+        mSearchSuggestionRvAdapter = SearchSuggestionRvAdapter(activity, null, this)
+        mSearchHistoryRvAdapter = SearchHistoryRvAdapter(activity, null, this)
+        rv_search_history.layoutManager = LinearLayoutManager(activity)
+        rv_search_history.adapter = mSearchHistoryRvAdapter
+        rv_search_result.layoutManager = LinearLayoutManager(activity)
+        rv_search_result.adapter = mSearchSuggestionRvAdapter
+        setupOnLoadMore(rv_search_result, mCallBackLoadMoreSearchResult)
+        showLoading(false)
     }
 
-    fun loadChecklists() {
-        mSearchPresenter!!.requestSearchSuggestion(this, query!!, nextPageToken)
+    fun requestSearchSuggestion() {
+        mSearchPresenter?.requestSearchSuggestion(this, Constants.API_KEY, Constants.PART_SNIPPET, Constants.TYPE_CHANNEL
+                , mSearchRequest?.nextPageToken, mSearchRequest!!.query)
+    }
+
+    fun loadSearchHistory() {
+        mRealmPresenter?.apply {
+            loadSearchHistory(this@FirstSuggestionFragment)
+        }
+    }
+
+    override fun <T : RealmObject> onChange(realmResult: RealmResults<T>) {
+        mSearchHistoryRvAdapter?.data = realmResult as? RealmResults<SearchQueryRealm>?
+        mSearchHistoryRvAdapter?.notifyDataSetChanged()
     }
 
     override fun onClick(position: Int, event: Int) {
+        when (event) {
+            BaseViewHolder.ACTION_CLICK_CHANNEL -> {
+                val itemInfo = mSearchSuggestionRvAdapter?.data!![position]
+                if (activity is SearchActivity) {
+                    (activity as SearchActivity).onSearchResultReceived(itemInfo)
+                }
+            }
+            BaseViewHolder.ACTION_CLICK_SEARCH_HISTORY -> {
+                rv_search_history.visibility = View.GONE
+                val item = mSearchHistoryRvAdapter?.data!![position]
+                if (activity is SearchActivity) {
+                    (activity as SearchActivity).onSearchHistoryClicked(item)
+                }
+            }
+        }
 
     }
 
     override fun onSearch(query: String, pageToken: String?) {
+        callbackShowRv.onShow(rv_search_history, false)
+        callbackShowRv.onShow(rv_search_result, true)
+        mSearchSuggestionRvAdapter?.data?.clear()
+        showLoading(true)
+        mCallBackLoadMoreSearchResult.countLoadmore = 0
         isFirstData = true
-        showMessageBottom(false, R.string.OK, 0, false, null)
-        setupOnLoadMore(rv, this)
-        loadChecklists()
+        mSearchRequest = SearchRequest(query, null, pageToken)
+        showMessageBottom(mCallbackDismiss)
+        setupOnLoadMore(rv_search_result, mCallBackLoadMoreSearchResult)
+        requestSearchSuggestion()
     }
 
+
     fun bindData(searchListResponse: SearchListResponse) {
-        val searchResultItems = searchListResponse.items
         hideLoadMoreIndicator()
         showLoading(false)
+        val searchResultItems = searchListResponse.items
         if (isFirstData) {
             isFirstData = false
             mSearchSuggestionRvAdapter = SearchSuggestionRvAdapter(activity, searchResultItems, this)
-            rv.adapter = mSearchSuggestionRvAdapter
+            rv_search_result.adapter = mSearchSuggestionRvAdapter
 
-        } else if (searchResultItems.isNotEmpty()) {
-            mSearchSuggestionRvAdapter!!.addAllItems(searchResultItems)
-            mSearchSuggestionRvAdapter!!.notifyDataSetChanged()
+        } else if (searchResultItems!!.isNotEmpty()) {
+            mSearchSuggestionRvAdapter?.data?.addAll(searchResultItems)
+            mSearchSuggestionRvAdapter?.notifyDataSetChanged()
         }
         if (isEmptyData(searchResultItems)) {
             isEmptyData()
         } else {
-            nextPageToken = searchListResponse.nextPageToken
+            mSearchRequest?.nextPageToken = searchListResponse.nextPageToken
+            mSearchRequest?.prevPageToken = searchListResponse.prevPageToken
         }
     }
 
-
-    override fun onLoadMore() {
-        if (!mSearchPresenter!!.isRequest) {
-            loadChecklists()
-            if (avi.visibility == View.GONE) {
-                mSearchSuggestionRvAdapter!!.addItem(SearchResult())
-                mSearchSuggestionRvAdapter!!.isLoading = true
-                Handler().post { mSearchSuggestionRvAdapter!!.notifyItemInserted(mSearchSuggestionRvAdapter!!.itemCount - 1) }
+    override fun onBackPressed() {
+        if (rv_search_history.visibility == View.GONE) {
+            callbackShowRv.onShow(rv_search_result, false)
+            callbackShowRv.onShow(rv_search_history, true)
+            mSearchHistoryRvAdapter?.notifyDataSetChanged()
+        } else {
+            if (activity is SearchActivity) {
+                (activity as SearchActivity).superOnBackPressed()
             }
         }
     }
 
-    override fun getMinSize() = 0
+    val mCallBackLoadMoreSearchResult = object : ICallbackLoadMore() {
+        override fun onLoadMore() {
+            if (!mSearchPresenter!!.isRequest) {
+                if (mSearchRequest?.nextPageToken == null) {
+                    return
+                }
+                requestSearchSuggestion()
+                countLoadmore++
+                if (countLoadmore > 0) {
+                    InputUtils.hideKeyboard(activity)
+                }
+                mSearchSuggestionRvAdapter?.isLoading = true
+                mSearchSuggestionRvAdapter?.data?.add(SearchResult())
+                Handler().post { mSearchSuggestionRvAdapter?.notifyItemInserted(mSearchSuggestionRvAdapter!!.itemCount - 1) }
+            }
+        }
+    }
 
+    val callbackShowRv = object : ICallbackShowRv {
+        override fun onShow(rv: RecyclerView, isShow: Boolean) {
+            rv.visibility = if (isShow) View.VISIBLE else View.GONE
+        }
+    }
+    override fun getMinSize() = 0
+    override fun getMaxSize() = 20
     override fun <T> isEmptyData(list: MutableList<T>?): Boolean {
         return list == null || list.size <= getMinSize()
     }
 
     override fun isEmptyData() {
+        showLoading(false)
         if (mSearchSuggestionRvAdapter!!.itemCount <= getMinSize()) {
-            showMessageBottom(true, R.string.empty_data, R.string.OK,
-                    false, onClickListenerDismiss)
+            mCallbackDismiss.isShow = true
+            showMessageBottom(mCallbackDismiss)
         }
     }
 
     override fun onLoadDataFailure() {
-        onLoadDataFailure(onClickListenerLoadChecklist)
+        mCallbackLoadChecklist.content = R.string.error_conection
+        onLoadDataFailure(mCallbackLoadChecklist)
+    }
+
+    override fun onNoInternetConnection() {
+        mCallbackLoadChecklist.content = R.string.internet_no_conection
+        onNoInternetConnection(mCallbackLoadChecklist)
     }
 
     override fun hideLoadMoreIndicator() {
-
-    }
-
-    override fun showLoading(isShow: Boolean) {
-        if (mSearchSuggestionRvAdapter != null && mSearchSuggestionRvAdapter!!.isLoading) {
-            return
+        if (mSearchSuggestionRvAdapter!!.isLoading) {
+            mSearchSuggestionRvAdapter?.data?.removeAt(mSearchSuggestionRvAdapter!!.itemCount - 1)
+            mSearchSuggestionRvAdapter?.notifyItemRemoved(mSearchSuggestionRvAdapter!!.itemCount)
+            mSearchSuggestionRvAdapter?.isLoading = false
         }
-        super.showLoading(isShow)
     }
 }

@@ -27,7 +27,7 @@ public class LightTextView extends TextView {
         applyCustomFont(context);
     }
     private void applyCustomFont(Context context) {
-        Typeface customFont = FontCache.getTypeface("Roboto-Regular.ttf", context);
+        Typeface customFont = FontCache.getTypeface("fonts/Roboto-Regular.ttf", context);
         setTypeface(customFont);
     }
 

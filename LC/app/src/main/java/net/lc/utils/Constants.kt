@@ -23,7 +23,9 @@ object Constants {
     const val ACTION_SEARCH_SUGGESTION = "SEARCH_SUGGESTION"
     const val KEY_SEARCH_SUGGESTION_QUERY = "SEARCH_SUGGESTION_QUERY"
     const val ACTION_BACK_SEARCH_SUGGESTION = "back_SUGGESTION"
-    const val AUTO_LOAD_DURATION = 1500
+    const val ACTIVITY_SEARCH_CODE = 123
+    const val AUTO_LOAD_DURATION = 1500L
+    const val ANIM_DURATION = 1500L
     const val TYPE_LOADING = -21
     const val TYPE_ITEM = 0
 }

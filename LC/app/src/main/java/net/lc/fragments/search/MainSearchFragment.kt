@@ -9,26 +9,30 @@ import kotlinx.android.synthetic.main.fragment_main_search.*
 import net.lc.R
 import net.lc.activities.SearchActivity
 import net.lc.adapters.search.MainSearchPagerAdapter
-import net.lc.interfaces.IBack
-import net.lc.interfaces.ICallbackSearch
+import net.lc.models.IBackListener
+import net.lc.models.ICallbackSearch
+
 
 /**
  * Created by mrvu on 12/28/16.
  */
-class MainSearchFragment(val searchActivity: SearchActivity) : BaseFragmentStack(), ICallbackSearch, IBack {
-    //    val vp_main_search: CustomViewPager by bindView(R.id.vp_main_search)
+class MainSearchFragment(val searchActivity: SearchActivity) : BaseFragmentStack(),
+        ICallbackSearch, IBackListener {
     companion object {
         fun newInstance(searchActivity: SearchActivity): MainSearchFragment {
             val fragment = MainSearchFragment(searchActivity)
-            searchActivity.mMainSearchFragment = fragment
+            searchActivity.mCallbackSearch = fragment
+            searchActivity.mBackListener = fragment
             return fragment
         }
     }
 
+    var mCallbackSearch: ICallbackSearch? = null
+    var mBackListener: IBackListener? = null
     private var mMainSearchPagerAdapter: MainSearchPagerAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_main_search, container, false)
+        return inflater?.inflate(R.layout.fragment_main_search, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -37,25 +41,21 @@ class MainSearchFragment(val searchActivity: SearchActivity) : BaseFragmentStack
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        DebugLog.e((vp_main_search == null).toString())
-        mMainSearchPagerAdapter = MainSearchPagerAdapter(childFragmentManager)
+        mMainSearchPagerAdapter = MainSearchPagerAdapter(this, childFragmentManager)
 //        vp_main_search.offscreenPageLimit=3
         vp_main_search.setPagingEnabled(false)
         vp_main_search.adapter = mMainSearchPagerAdapter
     }
 
     override fun onSearch(query: String, pageToken: String?) {
-//        DebugLog.e((vp_main_search == null).toString())
-        if (vp_main_search != null) {
-            vp_main_search.currentItem = 0
-        }
-
+        vp_main_search.currentItem = 0
+        mCallbackSearch?.onSearch(query, pageToken)
     }
 
     override fun onBackPressed() {
-        if (vp_main_search == null) return
         if (vp_main_search.currentItem == 0) {
-            searchActivity.superOnBackPressed()
+            mBackListener?.onBackPressed()
+//            searchActivity.superOnBackPressed()
         } else {
             vp_main_search.currentItem = 0
         }
