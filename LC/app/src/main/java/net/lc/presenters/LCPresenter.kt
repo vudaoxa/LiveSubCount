@@ -52,7 +52,7 @@ class LCPresenter {
                         val searchResults = t.items
                         searchResults?.apply {
                             if (searchResults.isNotEmpty()) {
-                                val ids = searchResults.map { it -> it.idInfo?.channelId!! }.toMutableList().joinToString(", ", "", "")
+                                val ids = searchResults.map { it.idInfo?.channelId!! }.toMutableList().joinToString(", ", "", "")
                                 requestQSearchChannelsInfo(mLCFragment, t, apiKey,
                                         Constants.PART_STATISTICS, ids)
 //                                mRealmPresenter?.saveSearchQuery(query)
@@ -127,9 +127,6 @@ class LCPresenter {
     fun requestChannelsInfo(mLiveCountFragment: LiveCountFragment,
                             apiKey: String, part: String, ids: String?, singleRequest: Boolean, duration: Long) {
         DebugLog.e("requestChannelsInfo++++=+=====++++++++++=1")
-//        if (singleRequest && isRequest)
-//            return
-//        isRequest = true
         val currentTime = System.currentTimeMillis()
         if (currentTime - time >= duration) {
             time = currentTime
@@ -141,7 +138,6 @@ class LCPresenter {
         val disposableObserver = object : DisposableObserver<ChannelListResponse>() {
             override fun onComplete() {
                 // do nothing
-//                isRequest = false
             }
 
             override fun onError(e: Throwable) {
@@ -158,7 +154,6 @@ class LCPresenter {
                     mLiveCountFragment.showLoading(false)
 
                 }
-//                isRequest = false
             }
 
             override fun onNext(response: ChannelListResponse) {
@@ -176,12 +171,9 @@ class LCPresenter {
 
 
     fun requestRandomChannel(mLiveCountFragment: LiveCountFragment, currentDate: String) {
-//        if(isRequest) return
-//        isRequest=true
         val disposableObserver = object : DisposableObserver<String>() {
             override fun onComplete() {
                 // do nothing
-//                isRequest = false
             }
 
             override fun onError(e: Throwable) {
@@ -196,7 +188,6 @@ class LCPresenter {
                         }
                     }
                 }
-//                isRequest = false
             }
 
             override fun onNext(response: String) {
@@ -204,7 +195,7 @@ class LCPresenter {
             }
         }
         RxRetrofitService.instance.rxxApiServices.requestFeaturedFileLC(currentDate)
-                .flatMap { it -> Observable.just(it.string()) }
+                .flatMap { Observable.just(it.string()) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(disposableObserver)

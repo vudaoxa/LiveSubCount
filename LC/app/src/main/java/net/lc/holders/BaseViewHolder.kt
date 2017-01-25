@@ -13,7 +13,6 @@ abstract class BaseViewHolder(protected var context: Context,
                               itemView: View, protected var mCallbackClick: ICallbackOnClick) : RecyclerView.ViewHolder(itemView) {
     abstract fun bindView(obj: Any, position: Int)
     var mPosition: Int = 0
-
     companion object {
         val ACTION_CLICK_CHANNEL = 0
         val ACTION_CLICK_SEARCH_HISTORY = 1

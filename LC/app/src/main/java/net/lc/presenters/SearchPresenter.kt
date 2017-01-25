@@ -53,7 +53,7 @@ class SearchPresenter {
                         val searchResults = t.items
                         if (searchResults!!.isNotEmpty()) {
                             mFirstSuggestionFragment.hideLoadMoreIndicator()
-                            val ids = searchResults.map { it -> it.idInfo?.channelId!! }.toMutableList().joinToString(", ", "", "")
+                            val ids = searchResults.map { it.idInfo?.channelId!! }.toMutableList().joinToString(", ", "", "")
                             requestSuggestionChannelsInfo(mFirstSuggestionFragment, t, apiKey,
                                     Constants.PART_STATISTICS, ids)
 //                            mRealmPresenter?.saveSearchQuery(query)

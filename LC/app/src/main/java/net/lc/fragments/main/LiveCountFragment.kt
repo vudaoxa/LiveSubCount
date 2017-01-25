@@ -191,23 +191,29 @@ class LiveCountFragment(val mMainFragment: MainFragment) : MBaseFragment(), IFie
     }
 
     override fun onSearchResultReceived(searchResult: SearchResult) {
-        searchResultRealm?.apply {
-            if (channelId == searchResult.idInfo!!.channelId) {
-                return
+        searchResult.apply {
+            searchResultRealm?.apply {
+                if (channelId == idInfo!!.channelId) {
+                    return
+                }
             }
+
+            toggle(d, false)
+            dispose()
+            showLoading(true)
+
+            snippet?.apply {
+                val searchResultRealm = SearchResultRealm(idInfo!!.channelId,
+                        channelTitle, description, thumbnails?.medium?.url, System.currentTimeMillis())
+                searchResultRealm.apply {
+                    updateViewChannelInfo(this)
+                    mRealmPresenter?.updateSearchResultRealm(this.channelId, this.channelTitle, this.following, System.currentTimeMillis(), this.thumbnailUrl)
+                }
+                loadLC(searchResultRealm, singleRequest = false)
+            }
+
         }
 
-        toggle(d, false)
-        dispose()
-        showLoading(true)
-        //xx
-        val searchResultRealm = SearchResultRealm(searchResult.idInfo!!.channelId,
-                searchResult.snippet?.channelTitle, searchResult.snippet?.thumbnails?.medium?.url, System.currentTimeMillis())
-        updateViewChannelInfo(searchResultRealm)
-        searchResultRealm.apply {
-            mRealmPresenter?.updateSearchResultRealm(this.channelId, this.channelTitle, this.following, System.currentTimeMillis(), this.thumbnailUrl)
-        }
-        loadLC(searchResultRealm, singleRequest = false)
     }
 
     override fun onSearchResultRealmReceived(searchResultRealm: SearchResultRealm) {
@@ -255,13 +261,14 @@ class LiveCountFragment(val mMainFragment: MainFragment) : MBaseFragment(), IFie
 
     fun updateViewChannelInfo(searchResultRealm: SearchResultRealm?) {
         searchResultRealm?.apply {
-            updateViewChannelInfo(channelTitle!!, thumbnailUrl!!)
+            updateViewChannelInfo(channelTitle!!, description!!, thumbnailUrl!!)
         }
     }
 
-    fun updateViewChannelInfo(title: String, thumbNailUrl: String) {
+    fun updateViewChannelInfo(title: String, des: String, thumbNailUrl: String) {
         tv_name.text = title
         img_avatar.setImageURI(thumbNailUrl)
+        tv_some.text = des
     }
 
     override fun initFields() {
@@ -273,9 +280,9 @@ class LiveCountFragment(val mMainFragment: MainFragment) : MBaseFragment(), IFie
 
     fun initSwCountLC() {
         val animIn = AnimationUtils.loadAnimation(activity,
-                android.R.anim.fade_in)
+                android.R.anim.slide_in_left)
         val animOut = AnimationUtils.loadAnimation(activity,
-                android.R.anim.fade_out)
+                android.R.anim.slide_out_right)
         animIn.duration = Constants.ANIM_DURATION
         animOut.duration = Constants.ANIM_DURATION
         sw_count.setInAnimation(animIn)
@@ -305,7 +312,7 @@ class LiveCountFragment(val mMainFragment: MainFragment) : MBaseFragment(), IFie
         when (part) {
             Constants.PART_STATISTICS -> {
                 val channelStatistics = channelListResponse.channelsInfo!!
-                updateLC(channelStatistics[0].statistics?.subscriberCount!!)
+                updateLC(channelStatistics[0].statistics!!)
             }
             Constants.PART_SNIPPET -> {
                 updateSnippet(channelListResponse)
@@ -315,21 +322,28 @@ class LiveCountFragment(val mMainFragment: MainFragment) : MBaseFragment(), IFie
 
     fun updateSnippet(channelListResponse: ChannelListResponse) {
         val channelInfo = channelListResponse.channelsInfo!![0]
-        val searchResultRealm = SearchResultRealm(channelInfo.id,
-                channelInfo.snippet?.title, channelInfo.snippet?.thumbnails?.medium?.url, System.currentTimeMillis())
-        searchResultRealm.apply {
-            mRealmPresenter?.updateSearchResultRealm(this.channelId, this.channelTitle, 0, System.currentTimeMillis(), this.thumbnailUrl)
+        channelInfo.apply {
+            snippet?.apply {
+                val searchResultRealm = SearchResultRealm(id,
+                        title, description, thumbnails?.medium?.url, System.currentTimeMillis())
+                searchResultRealm.apply {
+                    mRealmPresenter?.updateSearchResultRealm(this.channelId, this.channelTitle, 0, System.currentTimeMillis(), this.thumbnailUrl)
+                }
+                updateViewChannelInfo(searchResultRealm)
+                loadLC(searchResultRealm, false)
+            }
         }
-        updateViewChannelInfo(searchResultRealm)
-        loadLC(searchResultRealm, false)
     }
 
-    fun updateLC(count: String) {
+    fun updateLC(statistic: ItemStatistics) {
         if (startLoad) {
             showLoading(false)
             startLoad = false
         }
-        sw_count.setText(count)
+        statistic.apply {
+            sw_count.setText(subscriberCount)
+
+        }
     }
 
     fun showDialogSearchChannel() {

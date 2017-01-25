@@ -6,6 +6,7 @@ import net.lc.BuildConfig
  * Created by HP on 11/26/2016.
  */
 object Constants {
+    const val LC = "LC"
     const val KEY_AUTHORIZATION = "Authorization"
     const val PART_STATISTICS = "statistics"
     const val PART_SNIPPET = "snippet"

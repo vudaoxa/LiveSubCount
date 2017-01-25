@@ -10,6 +10,7 @@ open class SearchResultRealm(
         @PrimaryKey
         open var channelId: String? = null,
         open var channelTitle: String? = null,
+        open var description: String? = null,
         open var thumbnailUrl: String? = null,
         open var time: Long? = 0,
         open var following: Int? = 0

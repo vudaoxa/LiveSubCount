@@ -23,21 +23,32 @@
     <string name="no">Không</string>
     <string name="to_cancel">Bạn có chắc muốn hủy?</string>
 
-     <string name="view_on_youtube">View on Youtube</string>
+    <string name="view_on_youtube">View on Youtube</string>
     <string name="error_conection">Kết nối không thành công!</string>
     <string name="redo">Thử lại</string>
     <string name="internet_no_conection">Không có kết nối internet</string>
     <string name="empty_data">Không có dữ liệu</string>
 
     <string name="subscribers">%s subscribers </string>
-     <!--<string name=""></string>-->
-     <!--<string name=""></string>-->
-     <!--<string name=""></string>-->
-     <!--<string name=""></string>-->
-     <!--<string name=""></string>-->
-     <!--<string name=""></string>-->
-     <!--<string name=""></string>-->
-     <!--<string name=""></string>-->
-     <!--<string name=""></string>-->
+
+    <!--setting-->
+    <string name="general">General</string>
+    <string name="night_mode">Night mode</string>
+
+    <string name="livecounts">Livecounts</string>
+    <string name="sound_on_change">Play sound when subscribers count change</string>
+    <string name="transition_sub_count">Transition subscriber count</string>
+    <string name="thumb_channel">Show channel thumbnail</string>
+    <string name="screenshot_sharing">Take screenshot when sharing</string>
+
+    <string name="favorites">Favorites</string>
+    <string name="thumb_favorites">Show favorites thumbnail</string>
+
+    <string name="noti">Notifications</string>
+    <string name="thumb_noti">Show notifications thumbnail</string>
+    <!--<string name=""></string>-->
+    <!--<string name=""></string>-->
+    <!--<string name=""></string>-->
+    <!--<string name=""></string>-->
 
 </resources>

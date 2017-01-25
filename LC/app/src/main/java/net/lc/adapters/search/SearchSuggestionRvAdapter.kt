@@ -55,7 +55,5 @@ class SearchSuggestionRvAdapter(val mContext: Context,
         return Constants.TYPE_ITEM
     }
 
-    override fun getItemCount(): Int {
-        return if (data == null) 0 else data.size
-    }
+    override fun getItemCount() = if (data == null) 0 else data.size
 }

@@ -3,7 +3,7 @@
 
     <string-array name="titles">
         <item>Notifications</item>
-        <item>Followings</item>
+        <item>Favorites</item>
         <item>Live count</item>
         <item>Settings</item>
         <item>Info</item>

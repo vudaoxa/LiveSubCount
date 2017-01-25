@@ -17,8 +17,6 @@ import rx.android.schedulers.AndroidSchedulers
 class MRealmPresenter {
     var isRequest: Boolean = false
     fun loadSearchHistory(mFirstSuggestionFragment: FirstSuggestionFragment) {
-//        if (isRequest) return
-//        isRequest = true
         val realm = Realm.getDefaultInstance()
         val d = realm.where(SearchQueryRealm::class.java)
                 .findAllSortedAsync("time", Sort.DESCENDING).asObservable()
@@ -32,18 +30,14 @@ class MRealmPresenter {
                     }
                 }, {
                     it.printStackTrace()
-//                    isRequest = false
                     realm.close()
                 }, {
-                    //                    isRequest = false
                     realm.close()
                 })
         mFirstSuggestionFragment.mSubscription.add(d)
     }
 
     fun loadFollowingChannels(mFollowingChannelsFragment: FollowingChannelsFragment) {
-//        if (isRequest) return
-//        isRequest = true
         val realm = Realm.getDefaultInstance()
         val d = realm.where(SearchResultRealm::class.java).equalTo("following", 1)
                 .findAllSortedAsync("time", Sort.DESCENDING).asObservable()
@@ -60,10 +54,8 @@ class MRealmPresenter {
                     }
                 }, {
                     it.printStackTrace()
-//                    isRequest = false
                     realm.close()
                 }, {
-                    //                    isRequest = false
                     realm.close()
                 })
         mFollowingChannelsFragment.mSubscription.add(d)
@@ -119,8 +111,6 @@ class MRealmPresenter {
 
     fun updateSearchResultRealm(channelId: String?, channelTitle: String?, following: Int?, time: Long?, thumbnailUrl: String?) {
         DebugLog.e("updateSearchResultRealm-----------")
-//        if (isRequest) return
-//        isRequest = true
         val realm = Realm.getDefaultInstance()
         realm.executeTransactionAsync({
             val item = it.where(SearchResultRealm::class.java).equalTo("channelId", channelId).findFirst()
@@ -145,11 +135,9 @@ class MRealmPresenter {
             }
         }, {
             DebugLog.e("updateSearchResultRealm -------------- success")
-//            isRequest=false
             realm.close()
         }, {
             it.printStackTrace()
-//            isRequest=false
             realm.close()
         })
     }

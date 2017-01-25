@@ -23,6 +23,7 @@ class LCApplication : MultiDexApplication() {
         Realm.init(this)
         val realmConfig = RealmConfiguration.Builder()
                 .name("lc.realm")
+                .deleteRealmIfMigrationNeeded()
                 .build()
 //        Realm.deleteRealm(realmConfig)
         Realm.setDefaultConfiguration(realmConfig)
