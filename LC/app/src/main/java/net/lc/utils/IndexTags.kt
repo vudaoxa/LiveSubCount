@@ -6,6 +6,5 @@ package net.lc.utils
 object IndexTags {
     const val FRAGMENT_MAIN = 0
     const val MAIN_SEARCH = 20
-
-
+    const val INIT_NOTIS = 1
 }

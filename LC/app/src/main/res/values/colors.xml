@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ff252e39</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <!--<color name="colorPrimary">#ff252e39</color>-->
+    <color name="colorPrimary">#db4834</color>
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <color name="colorPrimaryDark">#db4834</color>
+    <!--<color name="colorPrimaryDark">@color/white</color>-->
     <color name="colorAccent">#FF4081</color>
     <color name="shadow">#22000000</color>
     <color name="grey_40">#bdbdbd</color>
@@ -19,7 +22,7 @@
     <color name="colorBgTabUnselected">#82dafe</color>
     <color name="cyan_light_">#ceeaf4</color>
     <color name="color1">#009933</color>
-    <color name="purple">#990055</color>
+    <color name="purple">#b686a1</color>
     <color name="green">#009933</color>
     <color name="green_light">#00e64d</color>
     <color name="green_light1">#72dfb4</color>
@@ -39,7 +42,8 @@
     <color name="cyan_light">#E5FFFF</color>
     <color name="gray">#bdbdbd</color>
 
-    <color name="bg_dark">#212131</color>
+    <!--<color name="bg_dark">#212131</color>-->
+    <color name="bg_dark">@color/white</color>
     <color name="bg_light">#3c3f41</color>
 
     <color name="transparent">#00000000</color>

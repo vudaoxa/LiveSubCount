@@ -16,7 +16,8 @@ import net.lc.utils.Constants
  */
 class SearchPresenter {
     var isRequest = false
-    var mRealmPresenter: MRealmPresenter? = null
+
+    //    var mRealmPresenter: MRealmPresenter? = null
     companion object {
     }
 
@@ -56,11 +57,9 @@ class SearchPresenter {
                             val ids = searchResults.map { it.idInfo?.channelId!! }.toMutableList().joinToString(", ", "", "")
                             requestSuggestionChannelsInfo(mFirstSuggestionFragment, t, apiKey,
                                     Constants.PART_STATISTICS, ids)
-//                            mRealmPresenter?.saveSearchQuery(query)
                             val searchQueryRealm = SearchQueryRealm(query, System.currentTimeMillis())
                             if (mFirstSuggestionFragment.isFirstData) {
-                                mRealmPresenter?.saveObject(searchQueryRealm)
-//                                mRealmPresenter?.saveSearchQuery(query)
+                                MRealmPresenter.saveObject(searchQueryRealm)
                             }
                         } else {
                             mFirstSuggestionFragment.isEmptyData()
@@ -107,13 +106,18 @@ class SearchPresenter {
             }
 
             override fun onNext(response: ChannelListResponse) {
-                val searchResults = searchListResponse?.items
-                val channelStatistics = response.channelsInfo!!
-                for (i in searchResults!!.indices) {
-                    val j = channelStatistics.indexOfFirst { it -> it.id == searchResults[i].idInfo?.channelId }
-                    searchResults[i].statistics = channelStatistics[j].statistics
+                searchListResponse?.apply {
+                    val searchResults = items
+                    val channelStatistics = response.channelsInfo!!
+                    searchResults?.apply {
+                        for (i in this.indices) {
+                            val j = channelStatistics.indexOfFirst { it.id == this[i].idInfo?.channelId }
+                            this[i].statistics = channelStatistics[j].statistics
+                        }
+                    }
+                    mFirstSuggestionFragment.bindData(this)
                 }
-                mFirstSuggestionFragment.bindData(searchListResponse!!)
+
             }
         }
 

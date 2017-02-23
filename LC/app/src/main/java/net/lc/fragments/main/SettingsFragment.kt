@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_settings.*
-import net.lc.R
 import net.lc.adapters.settings.GroupSettingsRvAdapter
 import net.lc.fragments.MBaseFragment
 import net.lc.models.GroupSettings
 import net.lc.models.ICallbackOnClick
 import net.lc.presenters.SettingsPresenter
+import net.live.sub.R
 
 /**
  * Created by HP on 11/28/2016.
@@ -24,13 +24,10 @@ class SettingsFragment : MBaseFragment(), ICallbackOnClick {
             return fragment
         }
     }
-
-    private var mSettingsPresenter: SettingsPresenter? = null
     private var groupSettingsRvAdapter: GroupSettingsRvAdapter? = null
     val mDisposables = CompositeDisposable()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mSettingsPresenter = SettingsPresenter(activity)
     }
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_settings, container, false)
@@ -42,7 +39,7 @@ class SettingsFragment : MBaseFragment(), ICallbackOnClick {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mSettingsPresenter?.apply { initSharedPrefrs(this@SettingsFragment) }
+        SettingsPresenter.initSharedPrefrs(this@SettingsFragment)
     }
 
     override fun onDestroy() {
@@ -58,6 +55,6 @@ class SettingsFragment : MBaseFragment(), ICallbackOnClick {
     }
 
     override fun onClick(position: Int, event: Int) {
-        mSettingsPresenter!!.toggleChildSetting(event)
+        SettingsPresenter.toggleChildSetting(event)
     }
 }

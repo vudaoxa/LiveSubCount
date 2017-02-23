@@ -4,18 +4,18 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.danil.recyclerbindableadapter.library.RecyclerBindableAdapter
-import io.realm.RealmResults
-import net.lc.R
 import net.lc.holders.FollowingChannelsItemViewHolder
 import net.lc.models.ICallbackOnClick
+import net.lc.models.RSearchResult
 import net.lc.models.SearchResultRealm
 import net.lc.utils.Constants
+import net.live.sub.R
 
 /**
  * Created by mrvu on 1/9/17.
  */
 class FollowingChannelsRvAdapter(val mContext: Context,
-                                 var data: RealmResults<SearchResultRealm>?,
+                                 var data: List<RSearchResult>?,
                                  val mCallbackClick: ICallbackOnClick)
     : RecyclerBindableAdapter<SearchResultRealm, RecyclerView.ViewHolder>() {
     override fun onBindItemViewHolder(viewHolder: RecyclerView.ViewHolder?, position: Int, type: Int) {

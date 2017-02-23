@@ -7,6 +7,7 @@ import android.content.Context
  */
 abstract class BaseFragmentStack : BaseFragment() {
     var title: String? = null
+    var back = false
     protected var screenManager: ScreenManager? = null
         private set
 
@@ -24,7 +25,7 @@ abstract class BaseFragmentStack : BaseFragment() {
     }
 
     fun showBackButton(): Boolean {
-        return false
+        return back
     }
 
     val indexTag: Int

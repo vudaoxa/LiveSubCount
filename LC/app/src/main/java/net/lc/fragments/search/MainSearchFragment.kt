@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.tieudieu.fragmentstackmanager.BaseFragmentStack
 import kotlinx.android.synthetic.main.fragment_main_search.*
-import net.lc.R
 import net.lc.activities.SearchActivity
 import net.lc.adapters.search.MainSearchPagerAdapter
 import net.lc.models.IBackListener
 import net.lc.models.ICallbackSearch
+import net.live.sub.R
 
 
 /**

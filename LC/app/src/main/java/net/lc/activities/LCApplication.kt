@@ -4,8 +4,13 @@ import android.support.multidex.MultiDexApplication
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.joanzapata.iconify.Iconify
 import com.joanzapata.iconify.fonts.*
-import io.realm.Realm
-import io.realm.RealmConfiguration
+import net.lc.presenters.SettingsPresenter
+import net.lc.presenters.initRealm
+import net.lc.utils.initAds
+import net.lc.utils.initAnimations
+import net.lc.utils.initIcons
+import net.lc.utils.initTracking
+import vn.mycare.member.utils.TimeUtils
 
 /**
  * Created by HP on 11/25/2016.
@@ -16,25 +21,17 @@ class LCApplication : MultiDexApplication() {
         super.onCreate()
         initAwesome()
         Fresco.initialize(this)
-        initRealm()
+        initRealm(this)
+        SettingsPresenter.initSettings(this)
+        initAnimations(this)
+        initIcons(this)
+        TimeUtils
+        initTracking(this)
+        initAds(this)
     }
 
-    private fun initRealm() {
-        Realm.init(this)
-        val realmConfig = RealmConfiguration.Builder()
-                .name("lc.realm")
-                .deleteRealmIfMigrationNeeded()
-                .build()
-//        Realm.deleteRealm(realmConfig)
-        Realm.setDefaultConfiguration(realmConfig)
-
-//        val realmConfig = RealmConfiguration.Builder(
-//                this).deleteRealmIfMigrationNeeded().build()
-//        Realm.setDefaultConfiguration(realmConfig)
-    }
     private fun initAwesome() {
-        Iconify
-                .with(FontAwesomeModule())
+        Iconify.with(FontAwesomeModule())
                 .with(EntypoModule())
                 .with(TypiconsModule())
                 .with(MaterialModule())

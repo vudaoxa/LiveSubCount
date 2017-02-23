@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/wrapper_ntb_horizontal"
     android:layout_width="match_parent"
@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/layout_ads"
         android:orientation="vertical"
         android:padding="@dimen/dimen0">
 
@@ -17,16 +18,16 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:visibility="visible"
-            app:ntb_badge_bg_color="@android:color/holo_red_light"
+            app:ntb_badge_bg_color="@color/blue"
             app:ntb_badge_gravity="bottom"
             app:ntb_badge_position="right"
             app:ntb_badge_title_color="@android:color/white"
             app:ntb_badge_use_typeface="false"
             app:ntb_badged="true"
 
-            app:ntb_bg_color="@color/transparent"
+            app:ntb_bg_color="@color/colorPrimary"
             app:ntb_corners_radius="0dp"
-            app:ntb_inactive_color="@color/grey_40"
+            app:ntb_inactive_color="@color/grey_70"
             app:ntb_scaled="false"
             app:ntb_tinted="true"
             app:ntb_title_mode="all"
@@ -39,5 +40,12 @@
 
     </LinearLayout>
 
-</FrameLayout>
+    <include
+        android:id="@+id/layout_ads"
+        layout="@layout/layout_ads_smart_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible" />
+</RelativeLayout>
 

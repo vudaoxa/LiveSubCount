@@ -18,10 +18,12 @@ class GroupSettingsItemViewHolder(val mContext: Context, itemView: View, val mIC
     override fun bindView(obj: Any, position: Int) {
         mPosition = position
         if (obj is GroupSettings) {
-            itemView.tv_group_name.setText(obj.label)
-            childSettingsRvAdapter = ChildSettingsRvAdapter(mContext, obj.childSettings, mICallbackOnClick)
-            itemView.rv_child.layoutManager = LinearLayoutManager(mContext)
-            itemView.rv_child.adapter = childSettingsRvAdapter
+            obj.apply {
+                itemView.tv_group_name.setText(obj.label)
+                childSettingsRvAdapter = ChildSettingsRvAdapter(mContext, obj.childSettings, mICallbackOnClick)
+                itemView.rv_child.layoutManager = LinearLayoutManager(mContext)
+                itemView.rv_child.adapter = childSettingsRvAdapter
+            }
         }
     }
 }

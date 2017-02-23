@@ -7,13 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.realm.RealmResults
-import net.lc.R
 import net.lc.holders.BaseViewHolder
 import net.lc.holders.LoadingViewHolder
 import net.lc.holders.search.HistoryItemViewHolder
 import net.lc.models.ICallbackOnClick
 import net.lc.models.SearchQueryRealm
 import net.lc.utils.Constants
+import net.live.sub.R
 
 /**
  * Created by mrvu on 1/6/17.

@@ -4,12 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_search_history"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:visibility="visible" />
+    <include layout="@layout/item_history_clear" />
+    <!--<android.support.v7.widget.RecyclerView-->
+    <!--android:id="@+id/rv_search_history"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="8dp"-->
+    <!--android:visibility="visible" />-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_search_result"

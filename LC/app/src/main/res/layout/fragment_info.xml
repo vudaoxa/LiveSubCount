@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dimen10">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen10">
+
+            <net.lc.widgets.BoldTextView
+                android:id="@+id/tv_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/app_version"
+                android:textColor="@color/grey_80"
+                android:textSize="@dimen/txt_size_24" />
+
+            <net.lc.widgets.NormalTextView
+                android:id="@+id/tv_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/author"
+                android:textColor="@color/grey_80"
+                android:textSize="@dimen/txt_size_18" />
+
+            <net.lc.widgets.BoldTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen10"
+                android:text="@string/about"
+                android:textColor="@color/grey_80"
+                android:textSize="@dimen/txt_size_17" />
+
+            <net.lc.widgets.NormalTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen2"
+                android:text="@string/text_about"
+                android:textColor="@color/grey_80" />
+
+            <net.lc.widgets.BoldTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen10"
+                android:text="@string/features"
+                android:textColor="@color/grey_80"
+                android:textSize="@dimen/txt_size_17" />
+
+            <net.lc.widgets.NormalTextView
+                android:id="@+id/tv_live_subs_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen10"
+                android:text="@string/live_subs_count_content"
+                android:textColor="@color/grey_80" />
+
+            <net.lc.widgets.NormalTextView
+                android:id="@+id/tv_sharing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen10"
+                android:text="@string/sharing_content"
+                android:textColor="@color/grey_80" />
+
+            <net.lc.widgets.NormalTextView
+                android:id="@+id/tv_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen10"
+                android:text="@string/text_search_content"
+                android:textColor="@color/grey_80" />
+
+            <net.lc.widgets.NormalTextView
+                android:id="@+id/tv_fav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen10"
+                android:text="@string/text_fav_content"
+                android:textColor="@color/grey_80" />
+
+            <net.lc.widgets.NormalTextView
+                android:id="@+id/tv_notis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen10"
+                android:text="@string/text_notis_content"
+                android:textColor="@color/grey_80" />
+
+            <net.lc.widgets.BoldTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen10"
+                android:text="@string/contact"
+                android:textColor="@color/grey_80"
+                android:textSize="@dimen/txt_size_17" />
+
+            <net.lc.widgets.NormalTextView
+                android:id="@+id/tv_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_email"
+                android:textColor="@color/grey_80" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

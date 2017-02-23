@@ -18,54 +18,52 @@ import net.lc.utils.Constants
  * Created by HP on 11/28/2016.
  */
 class LCPresenter {
-    //    var isRequest = false
-    var mRealmPresenter: MRealmPresenter? = null
+//    var mRealmPresenter: MRealmPresenter? = null
 
     //when user click user name of LiveCountFragment
-    fun requestQSearchLC(mLCFragment: LiveCountFragment, apiKey: String, part: String, type: String,
+    fun requestQSearchLC(mLiveCountFragment: LiveCountFragment, apiKey: String, part: String, type: String,
                          pageToken: String?, query: String) {
-//        if (isRequest) return
-//        isRequest = true
         val disposableObserver = object : DisposableObserver<SearchListResponse>() {
             override fun onComplete() {
-//                isRequest = false
             }
 
             override fun onError(e: Throwable?) {
-                if (mLCFragment.isAdded && mLCFragment.isVisible) {
-                    val error = e as RetrofitException
-                    when (error.kind) {
-                        RetrofitException.Kind.NETWORK -> {
-                            mLCFragment.onNoInternetConnection()
-                        }
-                        else -> {
-                            mLCFragment.onLoadDataFailure()
+                mLiveCountFragment.apply {
+                    if (isAdded && isVisible) {
+                        val error = e as RetrofitException
+                        when (error.kind) {
+                            RetrofitException.Kind.NETWORK -> {
+                                onNoInternetConnection()
+                            }
+                            else -> {
+                                onLoadDataFailure()
+                            }
                         }
                     }
                 }
-//                isRequest = false
             }
 
             override fun onNext(t: SearchListResponse?) {
-                if (mLCFragment.isAdded && mLCFragment.isVisible) {
-                    t?.apply {
-                        val searchResults = t.items
-                        searchResults?.apply {
-                            if (searchResults.isNotEmpty()) {
-                                val ids = searchResults.map { it.idInfo?.channelId!! }.toMutableList().joinToString(", ", "", "")
-                                requestQSearchChannelsInfo(mLCFragment, t, apiKey,
-                                        Constants.PART_STATISTICS, ids)
-//                                mRealmPresenter?.saveSearchQuery(query)
-                                val searchQueryRealm = SearchQueryRealm(query, System.currentTimeMillis())
-                                mRealmPresenter?.saveObject(searchQueryRealm)
-                            } else {
-                                mLCFragment.isEmptyQSearchResult()
+                mLiveCountFragment.apply {
+                    if (isAdded && isVisible) {
+                        t?.apply {
+                            val searchResults = t.items
+                            searchResults?.apply {
+                                if (searchResults.isNotEmpty()) {
+                                    val ids = searchResults.map { it.idInfo?.channelId!! }.toMutableList().joinToString(", ", "", "")
+                                    requestQSearchChannelsInfo(mLiveCountFragment, t, apiKey,
+                                            Constants.PART_STATISTICS, ids)
+                                    val searchQueryRealm = SearchQueryRealm(query.toLowerCase(), System.currentTimeMillis())
+                                    MRealmPresenter.saveObject(searchQueryRealm)
+                                } else {
+                                    isEmptyQSearchResult()
+                                }
+                            } ?: let {
+                                isEmptyQSearchResult()
                             }
                         } ?: let {
-                            mLCFragment.isEmptyQSearchResult()
+                            onLoadDataFailure()
                         }
-                    } ?: let {
-                        mLCFragment.onLoadDataFailure()
                     }
                 }
             }
@@ -75,44 +73,49 @@ class LCPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(disposableObserver)
-        mLCFragment.mDisposables.add(disposableObserver)
+        mLiveCountFragment.mDisposables.add(disposableObserver)
     }
 
     //ids was gathered from @requestQSearchLC
     fun requestQSearchChannelsInfo(mLiveCountFragment: LiveCountFragment, searchListResponse: SearchListResponse?,
                                    apiKey: String, part: String, ids: String?) {
-//        isRequest = true
         val disposableObserver = object : DisposableObserver<ChannelListResponse>() {
             override fun onComplete() {
                 // do nothing
-//                isRequest = false
             }
 
             override fun onError(e: Throwable) {
-                if (mLiveCountFragment.isAdded && mLiveCountFragment.isVisible) {
-                    val error = e as RetrofitException
-                    when (error.kind) {
-                        RetrofitException.Kind.NETWORK -> {
-                            mLiveCountFragment.onNoInternetConnection()
+                mLiveCountFragment.apply {
+                    if (isAdded && isVisible) {
+                        val error = e as RetrofitException
+                        when (error.kind) {
+                            RetrofitException.Kind.NETWORK -> {
+                                onNoInternetConnection()
+                            }
+                            else -> {
+                                onLoadDataFailure()
+                            }
                         }
-                        else -> {
-                            mLiveCountFragment.onLoadDataFailure()
-                        }
+                        showLoading(false)
                     }
-                    mLiveCountFragment.showLoading(false)
-
                 }
-//                isRequest = false
             }
 
             override fun onNext(response: ChannelListResponse) {
-                val searchResults = searchListResponse?.items
-                val channelStatistics = response.channelsInfo!!
-                for (i in searchResults!!.indices) {
-                    val j = channelStatistics.indexOfFirst { it -> it.id == searchResults[i].idInfo?.channelId }
-                    searchResults[i].statistics = channelStatistics[j].statistics
+                mLiveCountFragment.apply {
+                    if (isAdded && isVisible) {
+                        val searchResults = searchListResponse?.items
+                        val channelStatistics = response.channelsInfo!!
+                        for (i in searchResults!!.indices) {
+                            val j = channelStatistics.indexOfFirst { it -> it.id == searchResults[i].idInfo?.channelId }
+                            searchResults[i].statistics = channelStatistics[j].statistics
+                        }
+                        val searchResult = searchResults.maxBy { it.statistics!!.subscriberCount!!.toInt() }!!
+
+                        onSearchResultReceived(searchResult)
+                    }
                 }
-                mLiveCountFragment.onSearchResultReceived(searchResults.maxBy { it.statistics!!.subscriberCount!!.toInt() }!!)
+
             }
         }
 
@@ -125,14 +128,16 @@ class LCPresenter {
 
     var time = -1L
     fun requestChannelsInfo(mLiveCountFragment: LiveCountFragment,
-                            apiKey: String, part: String, ids: String?, singleRequest: Boolean, duration: Long) {
+                            apiKey: String, part: String, ids: String?, forUsrName: String?, duration: Long) {
         DebugLog.e("requestChannelsInfo++++=+=====++++++++++=1")
-        val currentTime = System.currentTimeMillis()
-        if (currentTime - time >= duration) {
-            time = currentTime
-        } else {
-            DebugLog.e("requestChannelsInfo-----return")
-            return
+        if (duration != -1L) {
+            val currentTime = System.currentTimeMillis()
+            if (currentTime - time >= duration) {
+                time = currentTime
+            } else {
+                DebugLog.e("requestChannelsInfo-----return")
+                return
+            }
         }
         DebugLog.e("requestChannelsInfo++++=+=====++++++++++=----------------2")
         val disposableObserver = object : DisposableObserver<ChannelListResponse>() {
@@ -141,28 +146,34 @@ class LCPresenter {
             }
 
             override fun onError(e: Throwable) {
-                if (mLiveCountFragment.isAdded && mLiveCountFragment.isVisible) {
-                    val error = e as RetrofitException
-                    when (error.kind) {
-                        RetrofitException.Kind.NETWORK -> {
-                            mLiveCountFragment.onNoInternetConnection()
+                mLiveCountFragment.apply {
+                    if (isAdded && isVisible) {
+                        val error = e as RetrofitException
+                        when (error.kind) {
+                            RetrofitException.Kind.NETWORK -> {
+                                onNoInternetConnection()
+                            }
+                            else -> {
+                                onLoadDataFailure()
+                            }
                         }
-                        else -> {
-                            mLiveCountFragment.onLoadDataFailure()
-                        }
+                        showLoading(false)
                     }
-                    mLiveCountFragment.showLoading(false)
-
                 }
             }
 
             override fun onNext(response: ChannelListResponse) {
                 DebugLog.e("requestChannelsInfo-----------------------")
-                mLiveCountFragment.update(response, part)
+                mLiveCountFragment.apply {
+                    if (isAdded && isVisible) {
+                        update(response, part)
+                    }
+                }
             }
         }
 
-        RxRetrofitService.instance.rxApiServices.requestChannelsInfo(apiKey, part, null, ids)
+        val id = if (forUsrName == null) ids else null
+        RxRetrofitService.instance.rxApiServices.requestChannelsInfo(apiKey, part, forUsrName, id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(disposableObserver)
@@ -177,21 +188,27 @@ class LCPresenter {
             }
 
             override fun onError(e: Throwable) {
-                if (mLiveCountFragment.isAdded && mLiveCountFragment.isVisible) {
-                    val error = e as RetrofitException
-                    when (error.kind) {
-                        RetrofitException.Kind.NETWORK -> {
-                            mLiveCountFragment.onLoadRandomChannelFailure()
-                        }
-                        else -> {
-                            mLiveCountFragment.onLoadRandomChannelFailure()
+                mLiveCountFragment.apply {
+                    if (isAdded && isVisible) {
+                        val error = e as RetrofitException
+                        when (error.kind) {
+                            RetrofitException.Kind.NETWORK -> {
+                                onNoInternetConnection()
+                            }
+                            else -> {
+                                onLoadRandomChannelFailure()
+                            }
                         }
                     }
                 }
             }
 
             override fun onNext(response: String) {
-                mLiveCountFragment.onFeaturedResponse(response)
+                mLiveCountFragment.apply {
+                    if (isAdded && isVisible) {
+                        onFeaturedResponse(response)
+                    }
+                }
             }
         }
         RxRetrofitService.instance.rxxApiServices.requestFeaturedFileLC(currentDate)

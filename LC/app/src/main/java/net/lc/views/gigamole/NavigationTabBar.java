@@ -56,8 +56,8 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Scroller;
 
-import net.lc.R;
 import net.lc.views.gigamole.behavior.NavigationTabBarBehavior;
+import net.live.sub.R;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -509,6 +509,11 @@ public class NavigationTabBar extends View implements ViewPager.OnPageChangeList
         return mTitleMode;
     }
 
+    public void setTitleMode(final TitleMode titleMode) {
+        mTitleMode = titleMode;
+        postInvalidate();
+    }
+
     protected void setTitleMode(final int index) {
         switch (index) {
             case TitleMode.ACTIVE_INDEX:
@@ -521,13 +526,13 @@ public class NavigationTabBar extends View implements ViewPager.OnPageChangeList
         }
     }
 
-    public void setTitleMode(final TitleMode titleMode) {
-        mTitleMode = titleMode;
-        postInvalidate();
-    }
-
     public BadgePosition getBadgePosition() {
         return mBadgePosition;
+    }
+
+    public void setBadgePosition(final BadgePosition badgePosition) {
+        mBadgePosition = badgePosition;
+        postInvalidate();
     }
 
     protected void setBadgePosition(final int index) {
@@ -545,13 +550,13 @@ public class NavigationTabBar extends View implements ViewPager.OnPageChangeList
         }
     }
 
-    public void setBadgePosition(final BadgePosition badgePosition) {
-        mBadgePosition = badgePosition;
-        postInvalidate();
-    }
-
     public BadgeGravity getBadgeGravity() {
         return mBadgeGravity;
+    }
+
+    public void setBadgeGravity(final BadgeGravity badgeGravity) {
+        mBadgeGravity = badgeGravity;
+        requestLayout();
     }
 
     protected void setBadgeGravity(final int index) {
@@ -564,11 +569,6 @@ public class NavigationTabBar extends View implements ViewPager.OnPageChangeList
                 setBadgeGravity(BadgeGravity.TOP);
                 break;
         }
-    }
-
-    public void setBadgeGravity(final BadgeGravity badgeGravity) {
-        mBadgeGravity = badgeGravity;
-        requestLayout();
     }
 
     public int getBadgeBgColor() {
@@ -601,6 +601,13 @@ public class NavigationTabBar extends View implements ViewPager.OnPageChangeList
         return mTypeface;
     }
 
+    public void setTypeface(final Typeface typeface) {
+        mTypeface = typeface;
+        mModelTitlePaint.setTypeface(typeface);
+        setBadgeTypeface();
+        postInvalidate();
+    }
+
     public void setTypeface(final String typeface) {
         if (TextUtils.isEmpty(typeface)) return;
 
@@ -613,13 +620,6 @@ public class NavigationTabBar extends View implements ViewPager.OnPageChangeList
         }
 
         setTypeface(tempTypeface);
-    }
-
-    public void setTypeface(final Typeface typeface) {
-        mTypeface = typeface;
-        mModelTitlePaint.setTypeface(typeface);
-        setBadgeTypeface();
-        postInvalidate();
     }
 
     protected void setBadgeTypeface() {

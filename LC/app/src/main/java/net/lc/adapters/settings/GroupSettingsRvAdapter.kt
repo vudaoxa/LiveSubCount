@@ -5,12 +5,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import net.lc.R
 import net.lc.holders.BaseViewHolder
 import net.lc.holders.settings.GroupSettingsItemViewHolder
 import net.lc.models.GroupSettings
 import net.lc.models.ICallbackOnClick
 import net.lc.utils.Constants
+import net.live.sub.R
 
 /**
  * Created by mrvu on 1/22/17.

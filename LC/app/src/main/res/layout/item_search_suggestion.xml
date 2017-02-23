@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/ripple_effect_grey"
     android:clickable="true"
     android:orientation="horizontal"
     android:padding="@dimen/dimen15">
-
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/img_avatar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="@dimen/dimen5"
-        android:layout_marginTop="@dimen/dimen10"
-        fresco:placeholderImage="@mipmap/img_choose_image"
-        fresco:placeholderImageScaleType="centerCrop"
-        fresco:roundAsCircle="false" />
-
     <include layout="@layout/item_search_content" />
 
 </LinearLayout>

@@ -8,11 +8,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.gms.ads.AdListener
 import io.reactivex.disposables.CompositeDisposable
 import io.realm.RealmObject
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_search_suggestions.*
-import net.lc.R
+import kotlinx.android.synthetic.main.item_history_clear.*
 import net.lc.activities.SearchActivity
 import net.lc.adapters.search.SearchHistoryRvAdapter
 import net.lc.adapters.search.SearchSuggestionRvAdapter
@@ -21,17 +22,17 @@ import net.lc.holders.BaseViewHolder
 import net.lc.models.*
 import net.lc.presenters.MRealmPresenter
 import net.lc.presenters.SearchPresenter
-import net.lc.utils.CallbackBottomMessage
-import net.lc.utils.Constants
-import net.lc.utils.InputUtils
+import net.lc.utils.*
+import net.live.sub.R
 import rx.subscriptions.CompositeSubscription
+import vn.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener
 
 /**
  * Created by mrvu on 12/28/16.
  */
 class FirstSuggestionFragment(val mMainSearchFragment: MainSearchFragment) : MBaseFragment(),
         ICallbackOnClick, ICallbackSearch,
-        ILoadData, IBackListener, IConnect, ICallbackRealmResultChange {
+        ILoadData, IBackListener, IConnect, ICallbackRealmResultChange, ICallbackClear {
     companion object {
         fun newInstance(mMainSearchFragment: MainSearchFragment): FirstSuggestionFragment {
             val fragment = FirstSuggestionFragment(mMainSearchFragment)
@@ -41,7 +42,8 @@ class FirstSuggestionFragment(val mMainSearchFragment: MainSearchFragment) : MBa
         }
     }
 
-    private var mRealmPresenter: MRealmPresenter? = null
+    private var mCallbackTouch: RecyclerTouchListener? = null
+    //    private var mRealmPresenter: MRealmPresenter? = null
     private var mSearchPresenter: SearchPresenter? = null
     private var mSearchSuggestionRvAdapter: SearchSuggestionRvAdapter? = null
     private var mSearchHistoryRvAdapter: SearchHistoryRvAdapter? = null
@@ -61,8 +63,7 @@ class FirstSuggestionFragment(val mMainSearchFragment: MainSearchFragment) : MBa
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mSearchPresenter = SearchPresenter()
-        mRealmPresenter = MRealmPresenter()
-        mSearchPresenter?.mRealmPresenter = mRealmPresenter
+        mInterstitialAd = initInterAds(activity, adListener)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -78,6 +79,16 @@ class FirstSuggestionFragment(val mMainSearchFragment: MainSearchFragment) : MBa
         super.onActivityCreated(savedInstanceState)
         loadSearchHistory()
     }
+
+    override fun onResume() {
+        super.onResume()
+        rv_search_history.addOnItemTouchListener(mCallbackTouch)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        rv_search_history.removeOnItemTouchListener(mCallbackTouch)
+    }
     override fun onDestroy() {
         super.onDestroy()
         mDisposables.dispose()
@@ -87,10 +98,24 @@ class FirstSuggestionFragment(val mMainSearchFragment: MainSearchFragment) : MBa
     fun initFields() {
         mSearchSuggestionRvAdapter = SearchSuggestionRvAdapter(activity, null, this)
         mSearchHistoryRvAdapter = SearchHistoryRvAdapter(activity, null, this)
-        rv_search_history.layoutManager = LinearLayoutManager(activity)
+        val layoutManager = LinearLayoutManager(activity)
+        rv_search_history.layoutManager = layoutManager
         rv_search_history.adapter = mSearchHistoryRvAdapter
         rv_search_result.layoutManager = LinearLayoutManager(activity)
         rv_search_result.adapter = mSearchSuggestionRvAdapter
+        mCallbackTouch = RecyclerTouchListener(activity, rv_search_history)
+        mCallbackTouch!!.setIndependentViews(R.id.rowButton)
+                .setViewsToFade(R.id.rowButton)
+                .setClickable(object : RecyclerTouchListener.OnRowClickListener {
+                    override fun onRowClicked(position: Int) {
+                        mCallbackTouch!!.closeVisibleBG(null)
+                    }
+
+                    override fun onIndependentViewClicked(independentViewID: Int, position: Int) {
+                        mCallbackTouch!!.openSwipeOptions(position - layoutManager.findFirstVisibleItemPosition())
+                    }
+                })
+                .setSwipeable(R.id.rowFG, R.id.rowBG) { viewID, position -> }
         setupOnLoadMore(rv_search_result, mCallBackLoadMoreSearchResult)
         showLoading(false)
     }
@@ -101,7 +126,7 @@ class FirstSuggestionFragment(val mMainSearchFragment: MainSearchFragment) : MBa
     }
 
     fun loadSearchHistory() {
-        mRealmPresenter?.apply {
+        MRealmPresenter.apply {
             loadSearchHistory(this@FirstSuggestionFragment)
         }
     }
@@ -112,22 +137,40 @@ class FirstSuggestionFragment(val mMainSearchFragment: MainSearchFragment) : MBa
     }
 
     override fun onClick(position: Int, event: Int) {
-        when (event) {
+        mPosition = position
+        mEvent = event
+        val x = rand(4)
+        if (x < 2) {
+            action()
+        } else {
+            if (!showInterAds(mInterstitialAd)) {
+                action()
+            }
+        }
+    }
+
+    fun action() {
+        when (mEvent) {
             BaseViewHolder.ACTION_CLICK_CHANNEL -> {
-                val itemInfo = mSearchSuggestionRvAdapter?.data!![position]
+                sendHit(CATEGORY_ACTION, ACTION_CLICK_SEARCH_RESULT_ITEM)
+                val itemInfo = mSearchSuggestionRvAdapter?.data!![mPosition]
                 if (activity is SearchActivity) {
                     (activity as SearchActivity).onSearchResultReceived(itemInfo)
                 }
             }
             BaseViewHolder.ACTION_CLICK_SEARCH_HISTORY -> {
                 rv_search_history.visibility = View.GONE
-                val item = mSearchHistoryRvAdapter?.data!![position]
+                val item = mSearchHistoryRvAdapter?.data!![mPosition]
                 if (activity is SearchActivity) {
                     (activity as SearchActivity).onSearchHistoryClicked(item)
                 }
             }
+            BaseViewHolder.ACTION_CLICK_FOLLOWING_CHANNEL_REMOVAL -> {
+                mCallbackTouch!!.closeVisibleBG(null)
+                //remove this history item
+//                MRealmPresenter.updateSearchResultRealm(channelId, channelTitle, subscriberCount, description, 0, -1L, thumbnailUrl, false)
+            }
         }
-
     }
 
     override fun onSearch(query: String, pageToken: String?) {
@@ -143,7 +186,9 @@ class FirstSuggestionFragment(val mMainSearchFragment: MainSearchFragment) : MBa
         requestSearchSuggestion()
     }
 
-
+    override fun onClear() {
+        mCallbackTouch!!.closeVisibleBG(null)
+    }
     fun bindData(searchListResponse: SearchListResponse) {
         hideLoadMoreIndicator()
         showLoading(false)
@@ -185,7 +230,7 @@ class FirstSuggestionFragment(val mMainSearchFragment: MainSearchFragment) : MBa
                 }
                 requestSearchSuggestion()
                 countLoadmore++
-                if (countLoadmore > 0) {
+                if (countLoadmore > 1) {
                     InputUtils.hideKeyboard(activity)
                 }
                 mSearchSuggestionRvAdapter?.isLoading = true
@@ -209,8 +254,10 @@ class FirstSuggestionFragment(val mMainSearchFragment: MainSearchFragment) : MBa
     override fun isEmptyData() {
         showLoading(false)
         if (mSearchSuggestionRvAdapter!!.itemCount <= getMinSize()) {
-            mCallbackDismiss.isShow = true
-            showMessageBottom(mCallbackDismiss)
+            mCallbackDismiss.apply {
+                isShow = true
+                showMessageBottom(this)
+            }
         }
     }
 
@@ -225,10 +272,41 @@ class FirstSuggestionFragment(val mMainSearchFragment: MainSearchFragment) : MBa
     }
 
     override fun hideLoadMoreIndicator() {
-        if (mSearchSuggestionRvAdapter!!.isLoading) {
-            mSearchSuggestionRvAdapter?.data?.removeAt(mSearchSuggestionRvAdapter!!.itemCount - 1)
-            mSearchSuggestionRvAdapter?.notifyItemRemoved(mSearchSuggestionRvAdapter!!.itemCount)
-            mSearchSuggestionRvAdapter?.isLoading = false
+        mSearchSuggestionRvAdapter?.apply {
+            if (isLoading) {
+                data?.apply {
+                    val l = itemCount
+                    if (l > 0) {
+                        removeAt(l - 1)
+                        notifyItemRemoved(l)
+                    }
+                }
+                isLoading = false
+            }
+        }
+    }
+
+    val adListener = object : AdListener() {
+        override fun onAdClosed() {
+            sendHit(CATEGORY_ACTION, ACTION_onAdClosed)
+            action()
+            requestNewInterstitial(mInterstitialAd)
+        }
+
+        override fun onAdFailedToLoad(p0: Int) {
+            sendHit(CATEGORY_ACTION, mapAdsErrors.get(p0) as String)
+        }
+
+        override fun onAdOpened() {
+            sendHit(CATEGORY_ACTION, ACTION_onAdOpened)
+        }
+
+        override fun onAdLoaded() {
+            sendHit(CATEGORY_ACTION, ACTION_onAdLoaded)
+        }
+
+        override fun onAdLeftApplication() {
+            sendHit(CATEGORY_ACTION, ACTION_onAdLeftApplication)
         }
     }
 }

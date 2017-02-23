@@ -7,9 +7,11 @@ import com.tieudieu.fragmentstackmanager.BaseActivityFragmentStack
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.item_main_action_btns.*
 import kotlinx.android.synthetic.main.layout_input_text.*
-import net.lc.R
 import net.lc.fragments.main.MainFragment
-import net.lc.utils.InputUtils
+import net.lc.models.ICallbackEditFav
+import net.lc.utils.*
+import net.lc.views.ActionBarTextBtn
+import net.live.sub.R
 
 /**
  * Created by HP on 11/28/2016.
@@ -20,6 +22,9 @@ abstract class ActionBarMainActivity : BaseActivityFragmentStack() {
         super.initViews(savedInstanceState)
         setup()
     }
+
+    var tvEdit: ActionBarTextBtn? = null
+    var mCallbackEditFav: ICallbackEditFav? = null
     fun setup(){
         toolbar?.let {
             setSupportActionBar(toolbar)
@@ -30,15 +35,27 @@ abstract class ActionBarMainActivity : BaseActivityFragmentStack() {
 //            val fragment = fragmentStackManager.currentFragment
 //            if(fra)
         }
-        btn_search.setOnClickListener { goSearch() }
-        btn_twitter.setOnClickListener { onTwitter() }
-        btn_star.setOnClickListener { onFollowing() }
 
+        btn_search.setImageDrawable(icon_search)
+        btn_twitter.setImageDrawable(icon_share)
+        btn_star.setImageDrawable(icon_star)
+        btn_submit.setImageDrawable(icon_send)
+        btn_search.setOnClickListener { goSearch() }
+        btn_twitter.setOnClickListener { onSharing() }
+        btn_star.setOnClickListener { onFollowing() }
+        btn_submit.setOnClickListener { onSubmit() }
+
+        layout_btns_fixed.startAnimation(anim)
+        tvEdit = ActionBarTextBtn(this, tv_edit, listOf(R.string.edit, R.string.done), 0)
+        tvEdit?.apply {
+            this.mCallbackEditFav = this@ActionBarMainActivity.mCallbackEditFav
+        }
     }
 
     abstract fun goSearch()
-    abstract fun onTwitter()
+    abstract fun onSharing()
     abstract fun onFollowing()
+    abstract fun onSubmit()
     override fun getResLayout(): Int {
         return R.layout.activity_main
     }
@@ -64,20 +81,11 @@ abstract class ActionBarMainActivity : BaseActivityFragmentStack() {
         }
     }
 
-    fun setToolbarTitle(title:String){
+    fun setToolbarTitle(title: String?) {
         toolbar_title.text = if(!TextUtils.isEmpty(title)) title else getString(R.string.app_name)
     }
-    fun showBtnBack(){
-        toolbar_back.visibility = View.VISIBLE
-    }
-//    fun signalOnClickBtnSearch(){
-//        LocalBroadcastManager.getInstance(this).sendBroadcast(Intent(Constants.ACTION_ONCLICK_BTN_SEARCH))
-//    }
-//    fun signalOnClickBtnTwitter(){
-//        LocalBroadcastManager.getInstance(this).sendBroadcast(Intent(Constants.ACTION_ONCLICK_BTN_TWITTER))
-//    }
-//    fun signalBackFragment(){
-//        LocalBroadcastManager.getInstance(this).sendBroadcast(Intent(Constants.ACTION_ONCLICK_BACK_FRAGMENT))
-//    }
 
+    fun showBtnBack(visi: Boolean) {
+        toolbar_back.visibility = if (visi) View.VISIBLE else View.GONE
+    }
 }

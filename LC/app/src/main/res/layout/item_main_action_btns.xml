@@ -5,48 +5,61 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <com.joanzapata.iconify.widget.IconTextView
-        android:id="@+id/btn_search"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:gravity="center"
-        android:padding="12dp"
-        android:shadowColor ="@color/shadow"
-        android:shadowDx="3"
-        android:shadowDy="3"
-        android:shadowRadius="1"
-        android:text="@string/fa_search"
-        android:textColor="@color/button_effect_gray"
-        android:textSize="20sp"
-        />
-    <com.joanzapata.iconify.widget.IconTextView
-        android:id="@+id/btn_twitter"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:gravity="center"
-        android:padding="12dp"
-        android:shadowColor ="@color/shadow"
-        android:shadowDx="3"
-        android:shadowDy="3"
-        android:shadowRadius="1"
-        android:text="@string/fa_twitter"
-        android:textColor="@color/button_effect_gray"
-        android:textSize="20sp"
-        />
-    <com.joanzapata.iconify.widget.IconTextView
-        android:id="@+id/btn_star"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:gravity="center"
-        android:padding="12dp"
-        android:shadowColor ="@color/shadow"
-        android:shadowDx="3"
-        android:shadowDy="3"
-        android:shadowRadius="1"
-        android:text="@string/ion_ios_star"
-        android:textColor="@color/button_effect_gray"
-        android:textSize="20sp"
-        />
+    <LinearLayout
+        android:id="@+id/layout_btns_fixed"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
 
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:background="?attr/actionBarItemBackground"
+            android:padding="15dp"
+            android:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/btn_twitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="?attr/actionBarItemBackground"
+            android:padding="15dp"
+            android:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/btn_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/actionBarItemBackground"
+            android:padding="15dp"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="?attr/actionBarItemBackground"
+        android:padding="15dp"
+        android:visibility="gone" />
+
+    <net.lc.widgets.BoldTextView
+        android:id="@+id/tv_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="?attr/actionBarItemBackground"
+        android:gravity="center"
+        android:padding="@dimen/dimen10"
+        android:text="@string/edit"
+        android:textColor="@color/button_effect_gray"
+        android:textSize="17sp"
+        android:visibility="gone" />
 
 </LinearLayout>

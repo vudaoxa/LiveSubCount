@@ -1,8 +1,10 @@
 package net.lc.fragments.main
 
+
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,32 +12,58 @@ import com.joanzapata.iconify.IconDrawable
 import com.joanzapata.iconify.fonts.IoniconsIcons
 import com.tieudieu.fragmentstackmanager.BaseFragmentStack
 import kotlinx.android.synthetic.main.fragment_main.*
-import net.lc.R
+import kotlinx.android.synthetic.main.layout_ads_smart_banner.*
 import net.lc.activities.MainActivity
 import net.lc.adapters.MainPagerAdapter
 import net.lc.models.*
-
-
+import net.lc.utils.loadBannerAds
 import net.lc.views.gigamole.NavigationTabBar
+import net.live.sub.R
 import java.util.*
 
 /**
  * Created by HP on 11/28/2016.
  */
 class MainFragment(mContext: Context) : BaseFragmentStack(), ICallbackSearchResult,
-        ICallbackFollowing, ICallbackSearchResultRealm {
+        ICallbackFollowing, ICallbackSearchResultRealm, ICallbackEditFav, ICallBackBadge, ICallbackSharing {
+    companion object {
+        fun newInstance(mContext: Context): MainFragment {
+            val fragment = MainFragment(mContext)
+            if (mContext is MainActivity) {
+                mContext.mCallbackSearchResult = fragment
+                mContext.mCallbackFollowing = fragment
+                mContext.mCallbackEditFav = fragment
+                mContext.mCallbackSharing = fragment
+                fragment.mCallbackTabMove = mContext
+            }
+            return fragment
+        }
+    }
+
+    private val ICON_COLOR = android.R.color.white
     val SIZE = 5
     val PIVOT = 2
-    private var index = PIVOT
-    private val color = Color.RED
+    var index = PIVOT
+    private val color = Color.TRANSPARENT
+    //    var mCallbackCheckFollowing:ICallbackCheckFollowing?=null
+    var mCallbackEditFav: ICallbackEditFav? = null
+    var mCallbackTabMove: ICallbackTabMove? = null
     var mCallbackSearchResult: ICallbackSearchResult? = null
     var mCallbackFollowing: ICallbackFollowing? = null
+    var mCallbackSharing: ICallbackSharing? = null
     var mCallbackSearchResultRealm: ICallbackSearchResultRealm? = null
-    var created: Boolean? = false
+    var created = false
     fun move2Index(i: Int) {
         vp_main.currentItem = i
-//        vp_main.offscreenPageLimit=5
         index = i
+    }
+
+    override fun onSharing() {
+        mCallbackSharing?.onSharing()
+    }
+
+    override fun onEditClicked(edit: Int) {
+        mCallbackEditFav?.onEditClicked(edit)
     }
 
     override fun onSearchResultReceived(searchResult: SearchResult) {
@@ -43,7 +71,7 @@ class MainFragment(mContext: Context) : BaseFragmentStack(), ICallbackSearchResu
         mCallbackSearchResult?.onSearchResultReceived(searchResult)
     }
 
-    override fun onSearchResultRealmReceived(searchResultRealm: SearchResultRealm) {
+    override fun onSearchResultRealmReceived(searchResultRealm: RSearchResult) {
         move2Index(PIVOT)
         mCallbackSearchResultRealm?.onSearchResultRealmReceived(searchResultRealm)
     }
@@ -56,6 +84,7 @@ class MainFragment(mContext: Context) : BaseFragmentStack(), ICallbackSearchResu
         super.onCreate(savedInstanceState)
         created = true
     }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_main, container, false)
     }
@@ -67,10 +96,11 @@ class MainFragment(mContext: Context) : BaseFragmentStack(), ICallbackSearchResu
 
     fun initUI() {
         vp_main.adapter = MainPagerAdapter(activity, this, fragmentManager, SIZE)
+        vp_main.offscreenPageLimit = 5
         setupNTB()
+        loadBannerAds(ad_view)
     }
 
-    private val ICON_COLOR = android.R.color.white
     fun setupNTB() {
         val models = ArrayList<NavigationTabBar.Model>()
         addModels(models, SIZE)
@@ -82,6 +112,21 @@ class MainFragment(mContext: Context) : BaseFragmentStack(), ICallbackSearchResu
             (vp_main.layoutParams as ViewGroup.MarginLayoutParams).topMargin = (-ntb_horizontal.badgeMargin).toInt()
             vp_main.requestLayout()
         }
+        vp_main.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                mCallbackTabMove?.onTabMove(position)
+                index = position
+            }
+        })
+
     }
 
     private fun addModels(models: ArrayList<NavigationTabBar.Model>, size: Int) {
@@ -98,14 +143,54 @@ class MainFragment(mContext: Context) : BaseFragmentStack(), ICallbackSearchResu
         }
     }
 
-    companion object {
-        fun newInstance(mContext: Context): MainFragment {
-            val fragment = MainFragment(mContext)
-            if (mContext is MainActivity) {
-                mContext.mCallbackSearchResult = fragment
-                mContext.mCallbackFollowing = fragment
-            }
-            return fragment
+    override fun updateBadge() {
+
+    }
+
+    private var countNotis: Int = 0
+    val BADGE_DURATION = 100L
+    fun setBadge(x: Int) {
+//        if(x == countNotis) return
+        ntb_horizontal?.apply {
+            val model = models[0]
+            countNotis = x
+            postDelayed({
+                model.apply {
+                    if (countNotis <= 0) {
+                        hideBadge()
+                    } else {
+                        val title = countNotis.toString()
+                        if (!isBadgeShowed) {
+                            badgeTitle = title
+                            showBadge()
+                        } else
+                            updateBadgeTitle(title)
+                    }
+                }
+            }, BADGE_DURATION)
         }
     }
+
+    fun increBadge(incre: Int) {
+        ntb_horizontal?.apply {
+            val model = models[0]
+            countNotis += incre
+            postDelayed({
+                model.apply {
+                    if (countNotis <= 0) {
+                        hideBadge()
+                    } else {
+                        val title = this.toString()
+                        if (!isBadgeShowed) {
+                            badgeTitle = title
+                            showBadge()
+                        } else
+                            updateBadgeTitle(title)
+                    }
+                }
+            }, BADGE_DURATION)
+        }
+    }
+
+
 }

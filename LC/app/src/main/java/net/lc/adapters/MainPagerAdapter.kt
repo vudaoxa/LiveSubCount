@@ -10,16 +10,13 @@ import net.lc.fragments.main.*
  * Created by HP on 11/28/2016.
  */
 class MainPagerAdapter(val context: Context, val mMainFragment: MainFragment, fm: FragmentManager, val size: Int) : FragmentStatePagerAdapter(fm) {
-
     override fun getCount(): Int {
-        //throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
         return size
     }
 
     override fun getItem(position: Int): BaseFragmentStack {
-        //throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
         val fragment = when (position) {
-            0 -> NotificationsFragment()
+            0 -> NotificationsFragment.newInstance(mMainFragment)
             1 -> FollowingChannelsFragment.newInstance(mMainFragment)
             2 -> LiveCountFragment.newInstance(mMainFragment)
             3 -> SettingsFragment()
@@ -28,5 +25,4 @@ class MainPagerAdapter(val context: Context, val mMainFragment: MainFragment, fm
         }
         return fragment!!
     }
-
 }

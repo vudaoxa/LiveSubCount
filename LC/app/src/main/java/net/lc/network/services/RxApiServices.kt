@@ -23,8 +23,6 @@ interface RxApiServices {
     @GET(NetConstants.API_YOUTUBE_SEARCH)
     fun requestSearch(@Query("key") developerKey: String, @Query("part") part: String, @Query("pageToken") pageToken: String?,
                       @Query("q") q: String, @Query("type") type: String): Observable<SearchListResponse>
-
-
 }
 
 interface RxxApiServices {

@@ -20,7 +20,6 @@
                 android:elevation="6dp"
                 app:contentInsetLeft="5dp"
                 app:contentInsetStart="15dp"
-                app:layout_scrollFlags="enterAlways"
                 app:popupTheme="@style/PopupMenu">
 
                 <LinearLayout

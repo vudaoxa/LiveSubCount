@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "760597662391",
+    "project_id": "live-counts"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760597662391:android:4ceb6dbd16f013f1",
+        "android_client_info": {
+          "package_name": "net.live.sub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI9TyU9RZZr28JNfbTExwmwI_d6h32W2E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-92549620-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

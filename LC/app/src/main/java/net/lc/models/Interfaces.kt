@@ -20,9 +20,13 @@ interface ICallbackFollowing {
     fun onFollowing()
 }
 
-//interface ICallbackRemoval{
-//    fun onRemove(position: Int)
-//}
+interface ICallbackSharing {
+    fun onSharing()
+}
+
+interface ICallbackCheckFollowing {
+    fun isFollowing(): Boolean
+}
 interface ICallbackChannelListResponse {
     fun update(channelListResponse: ChannelListResponse, part: String)
 }
@@ -47,9 +51,20 @@ interface ICallbackSearchResult {
 }
 
 interface ICallbackSearchResultRealm {
-    fun onSearchResultRealmReceived(searchResultRealm: SearchResultRealm)
+    fun onSearchResultRealmReceived(searchResultRealm: RSearchResult)
 }
 
+interface ICallbackTabMove {
+    fun onTabMove(i: Int)
+}
+
+interface ICallbackEditFav {
+    fun onEditClicked(edit: Int)
+}
+
+interface ICallbackClear {
+    fun onClear()
+}
 interface ICallbackHistory {
     fun onSearchHistoryClicked(searchQueryRealm: SearchQueryRealm)
 }
@@ -79,6 +94,25 @@ interface IBackListener {
     fun onBackPressed()
 }
 
-interface ILoading {
-    fun showLoading(isShow: Boolean)
+interface ICallbackSubmit {
+    fun onSubmit()
+}
+
+interface ICallBackBadge {
+    fun updateBadge()
+}
+
+interface ICallbackNotis {
+    fun onNotisCheck(rSearchResult: RSearchResult)
+}
+
+interface ICallbackToggleSettings {
+    fun onToggleSettings()
+}
+
+interface ICallbackRefresh {
+    fun setRefreshing(refreshing: Boolean)
+    fun pullToRefreshEnabled(): Boolean
+    val pullToRefreshColorResources: IntArray
+    fun onRefresh()
 }

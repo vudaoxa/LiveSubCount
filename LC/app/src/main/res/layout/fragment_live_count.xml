@@ -4,90 +4,164 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/layout_lc"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/img_avatar"
-                android:layout_width="@dimen/dimen70"
-                android:layout_height="@dimen/dimen70"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="@dimen/dimen20"
-                app:failureImage="@mipmap/ic_defaut_grey"
-                app:failureImageScaleType="fitXY"
-                app:placeholderImage="@mipmap/ic_defaut_grey"
-                app:placeholderImageScaleType="centerCrop"
-                app:progressBarAutoRotateInterval="1000"
-                app:progressBarImage="@mipmap/ic_loading_image"
-                app:progressBarImageScaleType="centerInside"
-                app:retryImageScaleType="centerCrop"
-                app:roundAsCircle="false" />
-
-            <com.joanzapata.iconify.widget.IconButton
-                android:id="@+id/btn_ytb_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen10"
-                android:background="@drawable/my_button"
-                android:minWidth="180dp"
-                android:shadowColor="@color/shadow"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="1"
-                android:text="@string/view_on_youtube"
-                android:textColor="@color/white"
-                android:textSize="@dimen/txt_size_16"
-                android:theme="@style/AppTheme.Button"
-                android:visibility="gone" />
-
-            <net.lc.widgets.NormalTextView
-                android:id="@+id/tv_name"
+            <LinearLayout
+                android:id="@+id/layout_lc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/ripple_effect_grey"
-                android:gravity="center"
-                android:padding="@dimen/dimen10"
-                android:text="Trinity GX"
-                android:textColor="@color/white"
-                android:textStyle="normal" />
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dimen10"
+                android:layout_marginRight="@dimen/dimen10"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-            <TextSwitcher
-                android:id="@+id/sw_count"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:animateFirstView="true"
-                android:background="@drawable/ripple_effect_grey"
-                android:gravity="center"
-                android:inAnimation="@android:anim/fade_in"
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/img_avatar"
+                    android:layout_width="@dimen/dimen70"
+                    android:layout_height="@dimen/dimen70"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/dimen20"
+                    app:failureImage="@mipmap/ic_defaut_grey"
+                    app:failureImageScaleType="fitXY"
+                    app:placeholderImage="@mipmap/ic_defaut_grey"
+                    app:placeholderImageScaleType="centerCrop"
+                    app:progressBarAutoRotateInterval="1000"
+                    app:progressBarImage="@mipmap/ic_loading_image"
+                    app:progressBarImageScaleType="centerInside"
+                    app:retryImageScaleType="centerCrop"
+                    app:roundAsCircle="false" />
 
-                android:outAnimation="@android:anim/fade_out"
-                android:text="1254096"
-                android:textSize="45sp"
-                android:textStyle="normal" />
+                <com.joanzapata.iconify.widget.IconButton
+                    android:id="@+id/btn_ytb_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen10"
+                    android:background="@drawable/my_button"
+                    android:minWidth="180dp"
+                    android:shadowColor="@color/shadow"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="1"
+                    android:text="@string/view_on_youtube"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_size_16"
+                    android:theme="@style/AppTheme.Button"
+                    android:visibility="gone" />
 
-            <net.lc.widgets.NormalTextView
-                android:id="@+id/tv_some"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="let go"
-                android:textColor="@color/blue"
-                android:textStyle="normal" />
+                <net.lc.widgets.NormalTextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/ripple_effect_grey"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen10"
+                    android:text="Trinity GX"
+                    android:textColor="@color/grey_80"
+                    android:textStyle="normal" />
 
-        </LinearLayout>
-    </ScrollView>
+                <TextSwitcher
+                    android:id="@+id/sw_count_subs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:animateFirstView="true"
+                    android:gravity="center"
+                    android:text="1254096"
+                    android:textSize="45sp"
+                    android:textStyle="normal" />
 
+                <LinearLayout
+                    android:id="@+id/layout_more_statistic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.joanzapata.iconify.widget.IconTextView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:gravity="center"
+                            android:padding="0dp"
+                            android:shadowColor="@color/shadow"
+                            android:shadowDx="3"
+                            android:shadowDy="3"
+                            android:shadowRadius="1"
+                            android:text="@string/ion_youtube"
+                            android:textColor="@color/red"
+                            android:textSize="20sp" />
+
+                        <TextSwitcher
+                            android:id="@+id/sw_count_vids"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:animateFirstView="true"
+                            android:background="@color/transparent"
+                            android:gravity="center"
+                            android:text="1254096"
+                            android:textSize="45sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.joanzapata.iconify.widget.IconTextView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:gravity="center"
+                            android:padding="0dp"
+                            android:shadowColor="@color/shadow"
+                            android:shadowDx="3"
+                            android:shadowDy="3"
+                            android:shadowRadius="1"
+                            android:text="@string/ion_eye"
+                            android:textColor="@color/blue"
+                            android:textSize="23sp" />
+
+                        <TextSwitcher
+                            android:id="@+id/sw_count_views"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:animateFirstView="true"
+                            android:gravity="center"
+                            android:text="1254096"
+                            android:textSize="45sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <net.lc.widgets.NormalTextView
+                    android:id="@+id/tv_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="let go"
+                    android:textColor="@color/grey_80"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <include
         layout="@layout/layout_progress_view"

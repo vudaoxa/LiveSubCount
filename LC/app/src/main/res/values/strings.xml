@@ -1,9 +1,13 @@
 <resources>
-    <string name="app_name">LC</string>
+    <string name="app_name">SCY</string>
+    <string name="banner_ad_unit_id">ca-app-pub-7484458390598913/7472236789</string>
+    <string name="inter_ad_unit_id">ca-app-pub-7484458390598913/8948969984</string>
     <string name="fa_search">{ion-ios-search-strong}</string>
     <string name="fa_twitter">{fa-twitter}</string>
     <string name="ion_ios_star">{ion-ios-star}</string>
     <string name="ion_jet">{ion-jet}</string>
+    <string name="ion_eye">{ion-eye}</string>
+    <string name="ion_youtube">{ion-social-youtube}</string>
     <string name="ion_ios_close_empty">{ion-ios-close-empty}</string>
     <string name="fa_history">{fa-history}</string>
     <string name="ion_ios_bell">{ion-ios-bell}</string>
@@ -11,24 +15,22 @@
     <string name="ion_more">{ion-android-more-vertical}</string>
     <string name="ion_trash">{ion-ios-trash-outline}</string>
 
-
     <string name="search_topic">Enter channel name, ID, or URL</string>
-    <string name="cancel">Hủy</string>
+    <string name="cancel">Cancel</string>
     <string name="OK">OK</string>
-    <string name="skip">Bỏ qua</string>
-    <string name="thanks">Cảm ơn</string>
-    <string name="end">Kết thúc</string>
-    <string name="send">Gửi</string>
-    <string name="yes">Có</string>
-    <string name="no">Không</string>
-    <string name="to_cancel">Bạn có chắc muốn hủy?</string>
+    <string name="skip">Skip</string>
+    <string name="thanks">Thanks</string>
+    <string name="end">Finish</string>
+    <string name="send">Send</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="to_cancel">Are you sure to cancel?</string>
 
     <string name="view_on_youtube">View on Youtube</string>
-    <string name="error_conection">Kết nối không thành công!</string>
-    <string name="redo">Thử lại</string>
-    <string name="internet_no_conection">Không có kết nối internet</string>
-    <string name="empty_data">Không có dữ liệu</string>
-
+    <string name="error_conection">Failed to connect!</string>
+    <string name="redo">Try again</string>
+    <string name="internet_no_conection">No internet connections</string>
+    <string name="empty_data">Data empty</string>
     <string name="subscribers">%s subscribers </string>
 
     <!--setting-->
@@ -46,9 +48,84 @@
 
     <string name="noti">Notifications</string>
     <string name="thumb_noti">Show notifications thumbnail</string>
-    <!--<string name=""></string>-->
-    <!--<string name=""></string>-->
-    <!--<string name=""></string>-->
+    <string name="more_statistic">Show videos count and views count</string>
+    <string name="show_description">Show channel description</string>
+
+    <string name="edit">Edit</string>
+    <string name="done">Done</string>
+    <string name="already_following">Already following %s</string>
+    <string name="follow_success">Following %s successfully</string>
+
+    <string name="milestone">Milestone</string>
+    <string name="sub_away">Subscribers away from milestone</string>
+    <string name="noti_approach">Notify me when %s approach a milestone</string>
+    <string name="noti_reach">Notify me when %s reaches a milestone</string>
+    <string name="notifications">Notifications</string>
+    <string name="nothing_changed">Nothing changed</string>
+    <string name="required_field">Required field</string>
+    <string name="required_greater">Required greater than %s</string>
+    <string name="error_load_notis">Failed to load notifications</string>
+    <string name="noti_approach_milestone">%1$s is %2$s away from %3$s subscribers</string>
+    <string name="noti_reached_milestone">%1$s hit %2$s subscribers</string>
+    <string name="sub2mile">%1$s is less than %2$s away from %3$s subscribers</string>
+
+    <string name="date1">%1$d %2$s %3$d</string>
+    <string name="date2">%1$d %2$s at %3$s</string>
+    <string name="just_now">Just now</string>
+    <string name="mins_ago">%d mins</string>
+    <string name="hours_ago">%d hrs</string>
+    <string name="yesterday">Yesterday at %s</string>
+
+    <string name="week_date">%1$s at %2$s</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thu">Thu</string>
+    <string name="fri">Fri</string>
+    <string name="sat">Sat</string>
+    <string name="sun">Sun</string>
+
+    <string name="jan">Jan</string>
+    <string name="feb">Feb</string>
+    <string name="mar">Mar</string>
+    <string name="apr">Apr</string>
+    <string name="may">May</string>
+    <string name="jun">Jun</string>
+    <string name="jul">Jul</string>
+    <string name="aug">Aug</string>
+    <string name="sep">Sep</string>
+    <string name="oct">Oct</string>
+    <string name="nov">Nov</string>
+    <string name="dec">Dec</string>
+    <string name="search_history">Search history</string>
+    <string name="clear">Clear</string>
+    <string name="app_version">Subscribers Count for Youtube v1.0.0</string>
+    <string name="author">by @Quang Vũ</string>
+
+    <string name="about">About</string>
+    <string name="text_about">The “Subscribers Count for Youtube” application allows you view your
+        Youtube subscriber amount in real-time! This is best way to stay up to date with your favorite Youtube channels</string>
+    <string name="features">Features</string>
+    <string name="live_subs_count">* Live subscribers count: </string>
+
+    <string name="live_subs_count_content">This is the app"'"s main mission,
+        it allows you to view a YouTube channel"'"s subscriber count in real-time close to per second.
+        The count is accurate because it is taken directly from Google"'"s service, while the count on YouTube does not update in real time
+</string>
+    <string name="sharing">* Sharing: </string>
+    <string name="sharing_content">Click the share button on the top right to share the experience with your friend!</string>
+    <string name="text_search">* Search: </string>
+    <string name="text_search_content">It is very easy to find your channel, just open the app, fill in your channel"'"s
+        ID or username and press search,oh and by the way, copy and pasting complete URLs will work too!
+        It will then retrieve your live subscriber count in no-time!</string>
+    <string name="text_fav">* Favorites: </string>
+    <string name="text_fav_content">Easy to add Youtube channel to your favorites list.
+        Favorite channels will be shown on the main page after the app is opened.</string>
+    <string name="text_notis">* Notifications: </string>
+    <string name="text_notis_content">After scheduling, It will notify when a favorite channel approach or hit milestone</string>
+    <string name="contact">Contact me</string>
+    <string name="text_email">Email:</string>
+    <string name="text_email_content">vudaoxa@gmail.com</string>
     <!--<string name=""></string>-->
 
 </resources>

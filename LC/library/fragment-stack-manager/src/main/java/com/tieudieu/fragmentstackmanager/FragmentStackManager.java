@@ -129,7 +129,7 @@ public class FragmentStackManager<F extends Fragment> implements FragmentStackSw
             @Override
             public void run() {
                 DebugLog.v("swapFragment()");
-                FragmentTransaction ft = mInitializationParams.getFragmentManager().beginTransaction();
+                final FragmentTransaction ft = mInitializationParams.getFragmentManager().beginTransaction();
                 if (mInitializationParams.isAnimationEnabled()) {
                     // ft.setCustomAnimations(R.anim.slide_left_in, R.anim.slide_right_in, 0, 0);
                     ft.setCustomAnimations(R.anim.slide_left_in, 0, 0, 0);

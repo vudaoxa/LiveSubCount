@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="80dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/rowBG"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:gravity="right"
         android:orientation="horizontal">
-
 
         <RelativeLayout
             android:id="@+id/delete"
@@ -65,16 +64,22 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/dimen5">
 
+            <ImageButton
+                android:id="@+id/btn_del"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:background="?attr/actionBarItemBackground"
+                android:padding="15dp"
+                android:visibility="gone" />
             <include layout="@layout/item_search_content" />
-
             <include layout="@layout/item_following_channel_btns" />
-
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/rowButton"
                 android:layout_width="40dp"
@@ -87,10 +92,9 @@
                 android:shadowDy="2"
                 android:shadowRadius="1"
                 android:text="@string/ion_more"
-                android:textColor="@color/button_effect_gray"
+                android:textColor="@color/grey_50"
                 android:textSize="25sp"
                 android:visibility="visible" />
         </LinearLayout>
-
     </LinearLayout>
 </RelativeLayout>

@@ -13,9 +13,7 @@ import kotlinx.android.synthetic.main.app_bar_search.*
 import kotlinx.android.synthetic.main.layout_input_text.*
 import net.lc.fragments.search.MainSearchFragment
 import net.lc.models.*
-import net.lc.utils.Constants
-import net.lc.utils.IndexTags
-import net.lc.utils.InputUtils
+import net.lc.utils.*
 import rx.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 
@@ -23,7 +21,6 @@ import java.util.concurrent.TimeUnit
  * Created by mrvu on 12/28/16.
  */
 class SearchActivity : ActionBarSearchActivity(), ICallbackSearchResult, ICallbackHistory {
-    //var mMainSearchFragment: MainSearchFragment? = null
     var mCallbackSearch: ICallbackSearch? = null
     var mBackListener: IBackListener? = null
     private var time = -1L
@@ -38,11 +35,13 @@ class SearchActivity : ActionBarSearchActivity(), ICallbackSearchResult, ICallba
 
     override fun onSearchHistoryClicked(searchQueryRealm: SearchQueryRealm) {
         edt_search.setText(searchQueryRealm.query)
+        sendHit(CATEGORY_ACTION, ACTION_CLICK_SEARCH_HISTORY_ITEM)
     }
     private fun submitSearchSuggestion(query: String) {
         DebugLog.e("submitSearchSuggestion--------------------------------" + query)
         //send to MainSearchFragment
         mCallbackSearch?.onSearch(query, null)
+        sendHit(CATEGORY_ACTION, ACTION_SEARCH_SUGGESTION)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,12 +79,15 @@ class SearchActivity : ActionBarSearchActivity(), ICallbackSearchResult, ICallba
         }
     }
 
-    override fun onNewScreenRequested(indexTag: Int, typeContent: String?, `object`: Any?) {
+    override fun onNewScreenRequested(indexTag: Int, typeContent: String?, obj: Any?) {
         when (indexTag) {
             IndexTags.MAIN_SEARCH -> fragmentStackManager.swapFragment(MainSearchFragment.newInstance(this))
         }
     }
 
+    override fun onNewScreenRequested(indexTag: Int, fragment: Fragment?, obj: Any?) {
+
+    }
     private fun initEdtSearch() {
         edt_search.setOnEditorActionListener { textView, i, keyEvent ->
             if (i == EditorInfo.IME_ACTION_SEARCH) {
@@ -126,11 +128,10 @@ class SearchActivity : ActionBarSearchActivity(), ICallbackSearchResult, ICallba
     }
 
     private fun submitSearch() {
+        sendHit(CATEGORY_ACTION, ACTION_SEARCH_SUBMIT)
         val query = edt_search.text.toString().trim()
         if (query.isEmpty()) return
         mCallbackSearch?.onSearch(query, null)
         InputUtils.hideKeyboard(this)
     }
-
-
 }
