@@ -3,7 +3,8 @@ package net.lc.activities
 import android.support.multidex.MultiDexApplication
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.joanzapata.iconify.Iconify
-import com.joanzapata.iconify.fonts.*
+import com.joanzapata.iconify.fonts.FontAwesomeModule
+import com.joanzapata.iconify.fonts.IoniconsModule
 import net.lc.presenters.SettingsPresenter
 import net.lc.presenters.initRealm
 import net.lc.utils.initAds
@@ -32,13 +33,14 @@ class LCApplication : MultiDexApplication() {
 
     private fun initAwesome() {
         Iconify.with(FontAwesomeModule())
-                .with(EntypoModule())
-                .with(TypiconsModule())
-                .with(MaterialModule())
-                .with(MaterialCommunityModule())
-                .with(MeteoconsModule())
-                .with(WeathericonsModule())
-                .with(SimpleLineIconsModule())
                 .with(IoniconsModule())
+//                .with(EntypoModule())
+//                .with(TypiconsModule())
+//                .with(MaterialModule())
+//                .with(MaterialCommunityModule())
+//                .with(MeteoconsModule())
+//                .with(WeathericonsModule())
+//                .with(SimpleLineIconsModule())
+
     }
 }
