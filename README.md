@@ -1,6 +1,7 @@
 # LiveSubCount
 Small Youtube subscribers count Android client developed with Kotlin
-Tutorial (WIP - work in progress, coming soon)
+## Tutorial 
+WIP - work in progress, it will come soon
 ## Libraries used:
 - Retrofit 2.0
 - OkHttp3
