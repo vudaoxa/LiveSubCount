@@ -1,7 +1,7 @@
 # LiveSubCount
 Small Youtube subscribers count Android client developed with Kotlin
 ## Tutorial 
-work in progress (WIP), it will come soon
+Work in progress (WIP), it will come soon
 ## Try it out on the Play Store
 [![Get it on Google Play][googleplay_store_badge]][demo_app]
 ## Libraries used:
