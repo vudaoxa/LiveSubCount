@@ -12,7 +12,8 @@ work in progress (WIP), it will come soon
 - Realm
 - Fresco
 - Kotlin Android Extensions
-## Developed by
+
+## Developed by: 
 https://twitter.com/QuangV14212864
 
 [googleplay_store_badge]: http://www.android.com/images/brand/get_it_on_play_logo_large.png
