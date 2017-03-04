@@ -26,6 +26,7 @@ Easy to add Youtube channel to your favorites list.Favorite channels will be sho
 You can easily setup milestone for channels.
 - Sharing is caring
 Click the share button on the top right to share the experience with your friend!
+
 ## Developed by: 
 https://twitter.com/QuangV14212864
 
