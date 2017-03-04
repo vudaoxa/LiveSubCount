@@ -12,7 +12,20 @@ Work in progress (WIP), it will come soon
 - Realm
 - Fresco
 - Kotlin Android Extensions
+## Features:
+The “Subscribers count for Youtube” application allows you view your Youtube subscriber amount in real-time! This is best way to stay up to date with your favorite Youtube channel.
 
+- Live subscriber count
+This is the app's main mission, it allows you to view a YouTube channel's subscriber count in real-time close to per second. The count is accurate because it is taken directly from Google's service, while the count on YouTube does not update in real time
+- Search engine
+It is very easy to find your channel, just open the app, fill in your channel's ID or username and press search, oh and by the way, copy and pasting complete URLs will work too! It will then retrieve your live subscriber count in no-time! 
+Quick search also is supported, by click into channel name in live count screen
+- Favorite channels
+Easy to add Youtube channel to your favorites list.Favorite channels will be shown on the main page after the app is opened.
+- Notifications
+You can easily setup milestone for channels.
+- Sharing is caring
+Click the share button on the top right to share the experience with your friend!
 ## Developed by: 
 https://twitter.com/QuangV14212864
 
